@@ -1,5 +1,4 @@
-
-const User_mModel = require('../models/Users_m');
+const UserModel = require('../models/User');
 
 module.exports = {
 
@@ -7,7 +6,7 @@ module.exports = {
 
         try {
             
-            const users = await User_mModel.findAll();
+            const users = await UserModel.findAll();
         
             return res.json(users);
 
@@ -23,7 +22,7 @@ module.exports = {
 
         try {
             
-            const user = await User_mModel.findByPk(id);
+            const user = await UserModel.findByPk(id);
         
             return res.json(user);
 
@@ -39,7 +38,7 @@ module.exports = {
         
         try {
             
-            const user = await User_mModel.create({ name, email, age })
+            const user = await UserModel.create({ name, email, age })
     
             return res.json(user);
 
@@ -57,7 +56,7 @@ module.exports = {
 
         try {
 
-            const user = await User_mModel.update({ name, email, age }, { where: { id }, returning: true });
+            const user = await UserModel.update({ name, email, age }, { where: { id }, returning: true });
 
             return res.json(user);
 
@@ -73,7 +72,7 @@ module.exports = {
 
         try {
 
-            await User_mModel.destroy({ where: { id } });
+            await UserModel.destroy({ where: { id } });
 
             return res.sendStatus(200);
             

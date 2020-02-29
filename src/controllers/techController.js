@@ -1,5 +1,5 @@
 const UserModel = require('../models/User');
-const AdressModel = require('../models/Address');
+const TechModel = require('../models/Tech');
 
 module.exports = {
 
@@ -10,12 +10,12 @@ module.exports = {
         try {
 
             const user = await UserModel.findByPk(user_id, {
-                include: { association: 'addresses' }
+                include: { association: 'techs', through: { attributes: [] } }
             });
 
             if(! user) return res.status(400).json({ error: 'User not found' });
         
-            return res.json(user.addresses);
+            return res.json(user.techs);
 
         } catch (error) {
             console.error(error);
@@ -27,7 +27,7 @@ module.exports = {
 
         const { user_id } = req.params;
 
-        const { zipcode, street, number } = req.body;
+        const { name } = req.body;
         
         try {
 
@@ -35,9 +35,13 @@ module.exports = {
 
             if(! user) return res.status(400).json({ error: 'User not found' });       
             
-            const address = await AdressModel.create({ user_id, zipcode, street, number });
+            const [ tech ] = await TechModel.findOrCreate({
+                where: { name }
+            });
+
+            await user.addTech(tech);  
     
-            return res.json(address);
+            return res.json(tech);
 
         } catch (error) {
             console.error(error);
@@ -49,20 +53,20 @@ module.exports = {
 
         const { user_id, id } = req.params;
 
-        const { zipcode, street, number } = req.body;
+        const { name } = req.body;
 
         try {
 
             const user = await UserModel.findByPk(user_id);
 
-            if(! user) return res.status(400).json({ error: "user not found" });
-
-            const address = await AdressModel.update({ user_id, zipcode, street, number }, { 
-                where: { id }, 
-                returning: true 
+            if(! user) return res.status(400).json({ error: 'User not found' });       
+            
+            const tech = await TechModel.update({ name }, {
+                where: { id },
+                returning: true
             });
-
-            return res.json(address);
+    
+            return res.json(tech);
 
         } catch (error) {
             console.error(error);
@@ -76,24 +80,16 @@ module.exports = {
 
         try {
 
-            const user = await UserModel.findByPk(user_id, {
-                include: { association: 'addresses' }
-            });
+            const user = await UserModel.findByPk(user_id);
 
             if(! user) return res.status(400).json({ error: "user not found" });
 
-            const address = user.addresses.filter(address => address.id === id);
+            const tech = await TechModel.findByPk(id);
 
-            if(address){
+            await user.removeTech(tech);  
 
-                AdressModel.destroy({ where: { id }});
-
-                return res.sendStatus(200);
-
-            } else {
-
-                return res.status(400).json({ error: "address not found" });
-            }            
+            return res.sendStatus(200);
+            
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "internal error" });

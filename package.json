@@ -1,8 +1,8 @@
 {
-  "name": "sql-t",
+  "name": "base-express-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon src/server.js",
