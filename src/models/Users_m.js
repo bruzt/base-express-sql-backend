@@ -14,6 +14,14 @@ class Users_m extends Model {
             sequelize: connection
         });
     }
+
+    static associate(models){
+
+        this.hasMany(models.Addresses_m, {
+            foreignKey: 'user_id',
+            as: 'addresses'
+        });
+    }
 }
 
 module.exports = Users_m;

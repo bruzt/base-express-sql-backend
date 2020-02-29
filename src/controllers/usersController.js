@@ -1,5 +1,5 @@
 
-const User_mModel = require('../models/User_m');
+const User_mModel = require('../models/Users_m');
 
 module.exports = {
 
@@ -13,7 +13,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "error" });
+            res.status(500).json({ error: "internal error" });
         }
     },
 
@@ -29,7 +29,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "error" });
+            res.status(500).json({ error: "internal error" });
         }
     },
     
@@ -45,7 +45,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "error" });
+            res.status(500).json({ error: "internal error" });
         }
     },
 
@@ -63,7 +63,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "error" });
+            res.status(500).json({ error: "internal error" });
         }
     },
 
@@ -79,7 +79,7 @@ module.exports = {
             
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "error" });
+            res.status(500).json({ error: "internal error" });
         }
     }
 }
