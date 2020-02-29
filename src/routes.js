@@ -3,6 +3,7 @@ const express = require('express');
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
 const techController = require('./controllers/techController');
+const reportController = require('./controllers/reportController');
 
 const router = express.Router();
 
@@ -21,5 +22,7 @@ router.get('/users/:user_id/techs', techController.index);
 router.post('/users/:user_id/techs', techController.store);
 router.put('/users/:user_id/techs/:id', techController.update);
 router.delete('/users/:user_id/techs/:id', techController.destroy);
+
+router.get('/report', reportController.show);
 
 module.exports = router;

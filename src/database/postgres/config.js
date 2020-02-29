@@ -11,5 +11,5 @@ module.exports = {
         //freezeTableName: true, // disable the modification of tablenames into plural
     },
     quoteIdentifiers: false, // torna nomes das tabelas e atributo case-insensitive
-    logging: false, // disable logging queries; default: console.log
+    //logging: false, // disable logging queries; default: console.log
 }
