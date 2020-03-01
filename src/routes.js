@@ -1,31 +1,29 @@
 const express = require('express');
 
-const indexController = require('./controllers/indexController');
-const userController = require('./controllers/userController');
-const addressController = require('./controllers/addressController');
-const techController = require('./controllers/techController');
-const reportController = require('./controllers/reportController');
+const autoRequire = require('./util/autoRequire');
+
+const routes = autoRequire(__dirname, './controllers');
 
 const router = express.Router();
 
-router.get('/', indexController.index);
+router.get('/', routes.indexController.index);
 
-router.get('/users', userController.index);
-router.get('/users/:id', userController.show);
-router.post('/users', userController.store);
-router.put('/users/:id', userController.update);
-router.delete('/users/:id', userController.destroy);
+router.get('/users', routes.userController.index);
+router.get('/users/:id', routes.userController.show);
+router.post('/users', routes.userController.store);
+router.put('/users/:id', routes.userController.update);
+router.delete('/users/:id', routes.userController.destroy);
 
-router.get('/users/:user_id/addresses', addressController.index);
-router.post('/users/:user_id/addresses', addressController.store);
-router.put('/users/:user_id/addresses/:id', addressController.update);
-router.delete('/users/:user_id/addresses/:id', addressController.destroy);
+router.get('/users/:user_id/addresses', routes.addressController.index);
+router.post('/users/:user_id/addresses', routes.addressController.store);
+router.put('/users/:user_id/addresses/:id', routes.addressController.update);
+router.delete('/users/:user_id/addresses/:id', routes.addressController.destroy);
 
-router.get('/users/:user_id/techs', techController.index);
-router.post('/users/:user_id/techs', techController.store);
-router.put('/users/:user_id/techs/:id', techController.update);
-router.delete('/users/:user_id/techs/:id', techController.destroy);
+router.get('/users/:user_id/techs', routes.techController.index);
+router.post('/users/:user_id/techs', routes.techController.store);
+router.put('/users/:user_id/techs/:id', routes.techController.update);
+router.delete('/users/:user_id/techs/:id', routes.techController.destroy);
 
-router.get('/report', reportController.show);
+router.get('/report', routes.reportController.show);
 
 module.exports = router;
