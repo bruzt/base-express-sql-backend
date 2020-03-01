@@ -13,7 +13,7 @@ function autoRequire(sourcePath, dirPath) {
 
         if(fs.lstatSync(filePath).isFile()){ // verifica se é um arquivo e não um diretorio
 
-            fileName = file.split('.')[0] // remove .js
+            const fileName = file.split('.')[0] // remove .js
             
             requires[fileName] = require(filePath);
         }
