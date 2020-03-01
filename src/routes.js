@@ -1,11 +1,14 @@
 const express = require('express');
 
+const indexController = require('./controllers/indexController');
 const userController = require('./controllers/userController');
 const addressController = require('./controllers/addressController');
 const techController = require('./controllers/techController');
 const reportController = require('./controllers/reportController');
 
 const router = express.Router();
+
+router.get('/', indexController.index);
 
 router.get('/users', userController.index);
 router.get('/users/:id', userController.show);
