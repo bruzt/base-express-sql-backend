@@ -9,9 +9,16 @@ function autoRequire(sourcePath, dirPath) {
 
     fs.readdirSync(normalizedPath).forEach( (file) => {
 
-        fileName = file.split('.')[0] // remove .js
-        
-        requires[fileName] = require(`${normalizedPath}/` + file);
+        const filePath = `${normalizedPath}/` + file;
+
+        const type = fs.lstatSync(filePath);
+
+        if(type.isFile()){ // verifica se é um arquivo e não um diretorio
+
+            fileName = file.split('.')[0] // remove .js
+            
+            requires[fileName] = require(filePath);
+        }
     });
 
     return requires;
