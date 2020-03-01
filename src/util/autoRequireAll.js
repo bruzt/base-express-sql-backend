@@ -11,9 +11,7 @@ function autoRequire(sourcePath, dirPath) {
 
         const filePath = `${normalizedPath}/` + file;
 
-        const type = fs.lstatSync(filePath);
-
-        if(type.isFile()){ // verifica se é um arquivo e não um diretorio
+        if(fs.lstatSync(filePath).isFile()){ // verifica se é um arquivo e não um diretorio
 
             fileName = file.split('.')[0] // remove .js
             
