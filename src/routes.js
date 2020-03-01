@@ -1,8 +1,8 @@
 const express = require('express');
 
-const autoRequire = require('./util/autoRequire');
+const autoRequireAll = require('./util/autoRequireAll');
 
-const controllers = autoRequire(__dirname, './controllers');
+const controllers = autoRequireAll(__dirname, './controllers');
 
 const router = express.Router();
 
