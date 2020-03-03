@@ -11,7 +11,7 @@ for(const model in models){
     models[model].init(connection);
 }
 
-for(const model in models){
+for(let model in models){
     if(models[model].associate){
         models[model].associate(connection.models);
     }

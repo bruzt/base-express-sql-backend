@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -85,70 +85,70 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = <span class="cstat-no" title="statement not covered" >require('express');</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
 &nbsp;
-const autoRequireAll = <span class="cstat-no" title="statement not covered" >require('./util/autoRequireAll');</span>
+const autoRequireAll = require('./util/autoRequireAll');
 &nbsp;
-const controllers = <span class="cstat-no" title="statement not covered" >autoRequireAll(__dirname, './controllers');</span>
+const controllers = autoRequireAll(__dirname, './controllers');
 &nbsp;
-const router = <span class="cstat-no" title="statement not covered" >express.Router();</span>
+const router = express.Router();
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.get('/', controllers.indexController.index);</span>
+router.get('/', controllers.indexController.index);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.get('/users', controllers.userController.index);</span>
-<span class="cstat-no" title="statement not covered" >router.get('/users/:id', controllers.userController.show);</span>
-<span class="cstat-no" title="statement not covered" >router.post('/users', controllers.userController.store);</span>
-<span class="cstat-no" title="statement not covered" >router.put('/users/:id', controllers.userController.update);</span>
-<span class="cstat-no" title="statement not covered" >router.delete('/users/:id', controllers.userController.destroy);</span>
+router.get('/users', controllers.userController.index);
+router.get('/users/:id', controllers.userController.show);
+router.post('/users', controllers.userController.store);
+router.put('/users/:id', controllers.userController.update);
+router.delete('/users/:id', controllers.userController.destroy);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.get('/users/:user_id/addresses', controllers.addressController.index);</span>
-<span class="cstat-no" title="statement not covered" >router.post('/users/:user_id/addresses', controllers.addressController.store);</span>
-<span class="cstat-no" title="statement not covered" >router.put('/users/:user_id/addresses/:id', controllers.addressController.update);</span>
-<span class="cstat-no" title="statement not covered" >router.delete('/users/:user_id/addresses/:id', controllers.addressController.destroy);</span>
+router.get('/users/:user_id/addresses', controllers.addressController.index);
+router.post('/users/:user_id/addresses', controllers.addressController.store);
+router.put('/users/:user_id/addresses/:id', controllers.addressController.update);
+router.delete('/users/:user_id/addresses/:id', controllers.addressController.destroy);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.get('/users/:user_id/techs', controllers.techController.index);</span>
-<span class="cstat-no" title="statement not covered" >router.post('/users/:user_id/techs', controllers.techController.store);</span>
-<span class="cstat-no" title="statement not covered" >router.put('/users/:user_id/techs/:id', controllers.techController.update);</span>
-<span class="cstat-no" title="statement not covered" >router.delete('/users/:user_id/techs/:id', controllers.techController.destroy);</span>
+router.get('/users/:user_id/techs', controllers.techController.index);
+router.post('/users/:user_id/techs', controllers.techController.store);
+router.put('/users/:user_id/techs/:id', controllers.techController.update);
+router.delete('/users/:user_id/techs/:id', controllers.techController.destroy);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >router.get('/report', controllers.reportController.show);</span>
+router.get('/report', controllers.reportController.show);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = router;</span></pre></td></tr></table></pre>
+module.exports = router;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Mar 03 2020 13:47:04 GMT-0300 (GMT-03:00)
+                at Tue Mar 03 2020 16:07:21 GMT-0300 (GMT-03:00)
             </div>
         </div>
         <script src="../prettify.js"></script>
