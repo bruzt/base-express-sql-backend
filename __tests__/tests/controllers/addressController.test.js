@@ -4,8 +4,8 @@ const truncate = require('../../util/truncate');
 const factories = require('../../util/factories');
 const app = require('../../../src/App');
 
-describe('UserController Test Suit', () => {
-    
+describe('AddressController Test Suit', () => {
+
     beforeAll( async () => {
 
         await truncate();
@@ -16,20 +16,21 @@ describe('UserController Test Suit', () => {
         await truncate();
     });
 
-    it('shoud show all users on db', async () => {
+    it('shoud show all address of a user', async () => {
 
-        for(let i=0; i < 3; i++){
-
-            await factories.create('User');
-        }
-
-        const users = await supertest(app).get('/users')
+        await factories.create('User');
         
-        expect(users.status).toBe(200);
-        expect(Object.keys(users.body).length).toBe(3);
+        await factories.create('Address', {
+            user_id: 1
+        });
+
+        const addresses = await supertest(app).get('/users/1/addresses')
+        
+        expect(addresses.status).toBe(200);
+        expect(addresses.body[0].user_id).toBe(1);
     });
 
-    it('shoud show a specific user on db', async () => {
+    /*it('shoud show a specific user on db', async () => {
 
         const userFactory = await factories.create('User');
         
@@ -70,5 +71,5 @@ describe('UserController Test Suit', () => {
         const user = await supertest(app).delete('/users/1');
         
         expect(user.status).toBe(200);
-    });
+    });*/
 });
