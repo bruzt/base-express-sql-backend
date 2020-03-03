@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-function autoRequire(sourcePath, dirPath) {
+function autoRequireAll(sourcePath, dirPath) {
 
     const requires = {};
 
@@ -22,4 +22,4 @@ function autoRequire(sourcePath, dirPath) {
     return requires;
 }
 
-module.exports = autoRequire;
+module.exports = autoRequireAll;
