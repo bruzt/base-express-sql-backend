@@ -3,12 +3,18 @@ const faker = require('faker');
 
 const autoRequireAll = require('../../src/util/autoRequireAll');
 
-const { User } = autoRequireAll(__dirname, '../../src/models');
+const models = autoRequireAll(__dirname, '../../src/models');
 
-factory.define('User', User, {
+factory.define('User', models.User, {
     name: faker.name.findName(),
     email: faker.internet.email(),
     age: faker.random.number()
+});
+
+factory.define('Address', models.Address, {
+    zipcode: faker.address.zipCode(),
+    street: faker.address.streetName(),
+    number: faker.random.number()
 });
 
 module.exports = factory;
