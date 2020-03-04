@@ -17,4 +17,8 @@ factory.define('Address', models.Address, {
     number: faker.random.number()
 });
 
+factory.define('Tech', models.Tech, {
+    name: faker.commerce.productName()
+});
+
 module.exports = factory;

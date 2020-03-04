@@ -57,10 +57,7 @@ module.exports = {
 
             if(! user) return res.status(400).json({ error: "user not found" });
 
-            const address = await AdressModel.update({ user_id, zipcode, street, number }, { 
-                where: { id }, 
-                returning: true 
-            });
+            const [ address ] = await AdressModel.update({ user_id, zipcode, street, number }, { where: { id } });
 
             return res.json(address);
 
@@ -82,18 +79,14 @@ module.exports = {
 
             if(! user) return res.status(400).json({ error: "user not found" });
 
-            const address = user.addresses.filter(address => address.id === id);
+            const address = user.addresses.filter(address => address.id == id);
+            
+            if(address.length === 0) return res.status(400).json({ error: "address not found" });
 
-            if(address){
+            AdressModel.destroy({ where: { id }});
 
-                AdressModel.destroy({ where: { id }});
-
-                return res.sendStatus(200);
-
-            } else {
-
-                return res.status(400).json({ error: "address not found" });
-            }            
+            return res.sendStatus(200);
+         
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "internal error" });

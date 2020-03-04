@@ -23,6 +23,8 @@ module.exports = {
         try {
             
             const user = await UserModel.findByPk(id);
+
+            if(! user) return res.status(400).json({ error: 'user not found'});
         
             return res.json(user);
 
@@ -56,9 +58,11 @@ module.exports = {
 
         try {
 
-            const user = await UserModel.update({ name, email, age }, { where: { id }, returning: true });
+            const [ updated ] = await UserModel.update({ name, email, age }, { where: { id } });
+            
+            if(updated === 0) return res.status(400).json({ error: 'user not found'});
 
-            return res.json(user);
+            return res.sendStatus(200);
 
         } catch (error) {
             console.error(error);
@@ -72,7 +76,9 @@ module.exports = {
 
         try {
 
-            await UserModel.destroy({ where: { id } });
+            const user = await UserModel.destroy({ where: { id } });
+
+            if(user === 0) return res.status(400).json({ error: 'user not found'});
 
             return res.sendStatus(200);
             

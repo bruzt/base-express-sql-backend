@@ -61,10 +61,7 @@ module.exports = {
 
             if(! user) return res.status(400).json({ error: 'User not found' });       
             
-            const tech = await TechModel.update({ name }, {
-                where: { id },
-                returning: true
-            });
+            const [ tech ] = await TechModel.update({ name }, { where: { id } });
     
             return res.json(tech);
 

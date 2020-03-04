@@ -34,6 +34,14 @@ describe('UserController Test Suit', () => {
         expect(user.id).toBe(response.body.id);
     });
 
+    it('shoud return code 400 for user not found - show', async () => {
+        
+        const response = await supertest(app).get(`/users/22`);
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
     it('shoud add a user on db', async () => {
 
         const response = await supertest(app).post('/users').send({
@@ -55,7 +63,16 @@ describe('UserController Test Suit', () => {
         });
         
         expect(response.status).toBe(200);
-        expect(response.body[1]).toBe(1);
+    });
+
+    it('shoud return code 400 for user not found - update', async () => {
+
+        const response = await supertest(app).put('/users/10').send({
+            name: 'test'
+        });
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
     });
 
     it('shoud erase a user from db', async () => {
@@ -65,5 +82,12 @@ describe('UserController Test Suit', () => {
         const response = await supertest(app).delete('/users/1');
         
         expect(response.status).toBe(200);
+    });
+
+    it('shoud return code 400 for user not found - delete', async () => {
+
+        const response = await supertest(app).delete('/users/1');
+        
+        expect(response.status).toBe(400);
     });
 });
