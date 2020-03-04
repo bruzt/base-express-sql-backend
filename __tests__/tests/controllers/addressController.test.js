@@ -6,70 +6,65 @@ const app = require('../../../src/App');
 
 describe('AddressController Test Suit', () => {
 
-    beforeAll( async () => {
-
-        await truncate();
-    });
-
-    beforeEach( async () => {
-
-        await truncate();
+    beforeEach( () => {
+       
+        return truncate();
     });
 
     it('shoud show all address of a user', async () => {
 
-        await factories.create('User');
+        const user = await factories.create('User');
         
         await factories.create('Address', {
-            user_id: 1
+            user_id: user.id
         });
 
-        const addresses = await supertest(app).get('/users/1/addresses')
+        const response = await supertest(app).get(`/users/${user.id}/addresses`)
         
-        expect(addresses.status).toBe(200);
-        expect(addresses.body[0].user_id).toBe(1);
+        expect(response.status).toBe(200);
+        expect(response.body[0].user_id).toBe(user.id);
     });
 
-    /*it('shoud show a specific user on db', async () => {
+    it('shoud add a address to an user', async () => {
 
-        const userFactory = await factories.create('User');
+        const user = await factories.create('User');
         
-        const user = await supertest(app).get('/users/1');
-
-        expect(user.status).toBe(200);
-        expect(JSON.parse(JSON.stringify(userFactory))).toMatchObject(user.body);
-    });
-
-    it('shoud add a user on db', async () => {
-
-        const user = await supertest(app).post('/users').send({
-            name: 'teste',
-            email: 'teste@teste.com',
-            age: 15
+        const response = await supertest(app).post(`/users/${user.id}/addresses`).send({
+            zipcode: '21119624',
+            street: 'rua tal do tal',
+            number: 15
         });
 
-        expect(user.status).toBe(200);
-        expect(user.body.name).toBe('teste');
+        expect(response.status).toBe(200);
+        expect(parseInt(response.body.user_id)).toBe(user.id);
     });
 
-    it('shoud update a user on db', async () => {
+    it('shoud update a address', async () => {
 
-        await factories.create('User');
+        const user = await factories.create('User');
 
-        const user = await supertest(app).put('/users/1').send({
-            name: 'test'
+        const userAddr = await factories.create('Address', {
+            user_id: user.id
         });
-        
-        expect(user.status).toBe(200);
-        expect(user.body[1]).toBe(1);
+
+        const response = await supertest(app).put(`/users/${user.id}/addresses/${userAddr.id}`).send({
+            street: 'rua test'
+        });
+
+        expect(response.status).toBe(200);
+        expect(response.body[1]).toBe(1);
     });
 
-    it('shoud erase a user from db', async () => {
+    it('shoud erase a address from a user', async () => {
 
-        await factories.create('User');
+        const user = await factories.create('User');
 
-        const user = await supertest(app).delete('/users/1');
+        const userAddr = await factories.create('Address', {
+            user_id: user.id
+        });
+
+        const response = await supertest(app).delete(`/users/${user.id}/addresses/${userAddr.id}`);
         
-        expect(user.status).toBe(200);
-    });*/
+        expect(response.status).toBe(200);
+    });
 });

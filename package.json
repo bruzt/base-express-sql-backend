@@ -7,9 +7,7 @@
     "start": "npm run dev",
     "dev": "nodemon src/server.js --ignore __tests__",
     "prod": "NODE_ENV=prod sequelize db:migrate && NODE_ENV=prod pm2 start src/server.js",
-    "pretest": "NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test jest",
-    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test jest && NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "keywords": [],
   "author": "",

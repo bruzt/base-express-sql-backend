@@ -7,7 +7,7 @@ const models = autoRequireAll(__dirname, '../models');
 
 const connection = new Sequelize(config);
 
-for(const model in models){
+for(let model in models){
     models[model].init(connection);
 }
 
