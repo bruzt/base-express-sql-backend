@@ -6,24 +6,26 @@ module.exports = {
 
     async show(req, res){
 
+        const iLike = (process.env.NODE_ENV === 'test') ? Op.like : Op.iLike;
+
         try {
 
             const user = await UserModel.findAll({
                 //attributes: ['name', 'email'],                
                 where: {
-                    email: { [Op.like]: '%'},
+                    email: { [iLike]: '%'},
                 },
                 include: [ 
                     {   // INNER JOIN
                         association: 'addresses',
                         where: {
-                            street: { [Op.like]: '%' } 
+                            street: { [iLike]: '%' } 
                         }
                     },
                     {   
                         association: 'techs',
                         where: {
-                            name: { [Op.like]: '%' }
+                            name: { [iLike]: '%' }
                         },
                         required: false, // LEFT JOIN
                     }
