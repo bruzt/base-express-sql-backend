@@ -1,7 +1,7 @@
 const supertest = require('supertest');
 
-const truncate = require('../../util/truncate');
-const factories = require('../../util/factories');
+const truncate = require('../../utils/truncate');
+const factories = require('../../utils/factories');
 const app = require('../../../src/App');
 
 describe('UserController Test Suit', () => {
