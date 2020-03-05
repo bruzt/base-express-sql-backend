@@ -47,7 +47,8 @@ describe('UserController Test Suit', () => {
         const response = await supertest(app).post('/users').send({
             name: 'teste',
             email: 'teste@teste.com',
-            age: 15
+            age: 15,
+            password: 'bla123'
         });
 
         expect(response.status).toBe(200);

@@ -1,5 +1,5 @@
-const UserModel = require('../models/User');
-const TechModel = require('../models/Tech');
+const UserModel = require('../models/UserModel');
+const TechModel = require('../models/TechModel');
 
 module.exports = {
 

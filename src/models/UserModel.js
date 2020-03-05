@@ -3,9 +3,9 @@ const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-class User extends Model {
+class UserModel extends Model {
 
-    static init(connection){
+    static init(connection) {
 
         super.init({
 
@@ -16,34 +16,36 @@ class User extends Model {
             password: DataTypes.VIRTUAL
 
         }, {
-            sequelize: connection
+            tableName: 'users',
+            sequelize: connection,
+            hooks: {
+                beforeSave: async (user) => {
+
+                    if (user.password) {
+
+                        user.password_hash = await bcrypt.hash(user.password, 8);
+                    }
+                }
+            }
         });
     }
 
-    static associate(models){
+    static associate(models) {
 
-        this.hasMany(models.Address, {
+        this.hasMany(models.AddressModel, {
             foreignKey: 'user_id',
             as: 'addresses'
         });
 
-        this.belongsToMany(models.Tech, {
+        this.belongsToMany(models.TechModel, {
             foreignKey: 'user_id',
             through: 'users_techs',
             as: 'techs'
         });
     }
 
-    async beforeSave(user){
-
-        if(user.password){
-
-            user.password_hash = await bcrypt.hash(user.password, 8);
-        }
-    }
-
     checkPassword(password) {
-        
+
         return bcrypt.compare(password, this.password_hash);
     }
 
@@ -53,4 +55,4 @@ class User extends Model {
     }
 }
 
-module.exports = User;
+module.exports = UserModel;

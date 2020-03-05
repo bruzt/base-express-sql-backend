@@ -1,5 +1,5 @@
-const UserModel = require('../models/User');
-const AdressModel = require('../models/Address');
+const UserModel = require('../models/UserModel');
+const AddressModel = require('../models/AddressModel');
 
 module.exports = {
 
@@ -35,7 +35,7 @@ module.exports = {
 
             if(! user) return res.status(400).json({ error: 'User not found' });       
             
-            const address = await AdressModel.create({ user_id, zipcode, street, number });
+            const address = await AddressModel.create({ user_id, zipcode, street, number });
     
             return res.json(address);
 
@@ -57,7 +57,7 @@ module.exports = {
 
             if(! user) return res.status(400).json({ error: "user not found" });
 
-            const [ address ] = await AdressModel.update({ user_id, zipcode, street, number }, { where: { id } });
+            const [ address ] = await AddressModel.update({ user_id, zipcode, street, number }, { where: { id } });
 
             return res.json(address);
 
@@ -83,7 +83,7 @@ module.exports = {
             
             if(address.length === 0) return res.status(400).json({ error: "address not found" });
 
-            AdressModel.destroy({ where: { id }});
+            AddressModel.destroy({ where: { id }});
 
             return res.sendStatus(200);
          

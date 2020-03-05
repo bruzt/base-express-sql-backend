@@ -1,4 +1,4 @@
-const UserModel = require('../models/User');
+const UserModel = require('../models/UserModel');
 
 module.exports = {
 
@@ -36,11 +36,11 @@ module.exports = {
     
     async store(req, res){
 
-        const { name, email, age } = req.body;
+        const { name, email, age, password } = req.body;
         
         try {
             
-            const user = await UserModel.create({ name, email, age })
+            const user = await UserModel.create({ name, email, age, password })
     
             return res.json(user);
 

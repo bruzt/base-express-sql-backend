@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 
-const UserModel = require('../models/User');
+const UserModel = require('../models/UserModel');
 
 module.exports = {
 
