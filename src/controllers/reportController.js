@@ -11,21 +11,21 @@ module.exports = {
             const user = await UserModel.findAll({
                 //attributes: ['name', 'email'],                
                 where: {
-                    email: { [Op.iLike]: '%@rocketseat.com.br'},
+                    email: { [Op.like]: '%'},
                 },
-                include: [
-                    {
+                include: [ 
+                    {   // INNER JOIN
                         association: 'addresses',
                         where: {
-                            street: { [Op.iLike]: 'rua%' } 
+                            street: { [Op.like]: '%' } 
                         }
                     },
-                    {
+                    {   
                         association: 'techs',
                         where: {
-                            name: { [Op.iLike]: '%react%' }
+                            name: { [Op.like]: '%' }
                         },
-                        required: false,
+                        required: false, // LEFT JOIN
                     }
                 ]
             });

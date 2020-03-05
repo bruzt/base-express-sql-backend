@@ -11,7 +11,7 @@ function autoRequireAll(sourcePath, dirPath) {
 
         const filePath = `${normalizedPath}/` + file;
 
-        if(fs.lstatSync(filePath).isFile()){ // verifica se é um arquivo e não um diretorio
+        if(fs.lstatSync(filePath).isFile()){ // verify if is a file, not a directory
 
             const fileName = file.split('.')[0] // remove .js
             
