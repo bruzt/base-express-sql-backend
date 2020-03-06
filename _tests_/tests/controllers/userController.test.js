@@ -4,7 +4,7 @@ const truncate = require('../../utils/truncate');
 const factories = require('../../utils/factories');
 const app = require('../../../src/App');
 
-describe('UserController Test Suit', () => {
+describe('userController Test Suit', () => {
 
     beforeEach( () => {
               

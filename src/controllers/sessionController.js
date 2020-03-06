@@ -15,7 +15,7 @@ module.exports = {
     
             const comparePassword = await user.checkPassword(password);
     
-            if(! comparePassword) return res.status(401).json({ error: "user or password not found" });
+            if(! comparePassword) return res.status(400).json({ error: "user or password not found" });
     
             user.password = undefined;
 

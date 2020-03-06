@@ -4,7 +4,7 @@ const truncate = require('../../utils/truncate');
 const factories = require('../../utils/factories');
 const app = require('../../../src/App');
 
-describe('UserController Test Suit', () => {
+describe('reportController Test Suit', () => {
 
     beforeEach( () => {
               
@@ -26,7 +26,9 @@ describe('UserController Test Suit', () => {
         await user.addTech(tech2);
         await user.addTech(tech3);
 
-        const response = await supertest(app).get('/report');
+        const response = await supertest(app).get('/report').set(
+            'authorization', `Bearer ${user.generateToken()}`
+        );
         
         expect(response.status).toBe(200);
         expect(response.body[0].addresses.length).toBe(2);
