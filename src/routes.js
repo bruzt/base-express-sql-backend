@@ -1,7 +1,7 @@
 const express = require('express');
 
 const autoRequireAll = require('./util/autoRequireAll');
-const verifyJwt = require('./util/verifyJwt');
+const verifyJwt = require('./middlewares/verifyJwt');
 
 const controllers = autoRequireAll(__dirname, './controllers');
 
