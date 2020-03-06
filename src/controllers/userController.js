@@ -7,6 +7,8 @@ module.exports = {
         try {
             
             const users = await UserModel.findAll();
+
+            users.forEach( (user) => user.password = undefined);
         
             return res.json(users);
 
@@ -25,6 +27,8 @@ module.exports = {
             const user = await UserModel.findByPk(id);
 
             if(! user) return res.status(400).json({ error: 'user not found'});
+
+            user.password = undefined;
         
             return res.json(user);
 
@@ -40,8 +44,10 @@ module.exports = {
         
         try {
             
-            const user = await UserModel.create({ name, email, age, password })
+            const user = await UserModel.create({ name, email, age, password });
     
+            user.password = undefined;
+
             return res.json(user);
 
         } catch (error) {

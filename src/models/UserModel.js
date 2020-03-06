@@ -12,18 +12,17 @@ class UserModel extends Model {
             name: DataTypes.STRING,
             email: DataTypes.STRING,
             age: DataTypes.INTEGER,
-            password_hash: DataTypes.STRING,
-            password: DataTypes.VIRTUAL
+            password: DataTypes.STRING,
 
         }, {
             tableName: 'users',
             sequelize: connection,
             hooks: {
                 beforeSave: async (user) => {
-
+                    
                     if (user.password) {
 
-                        user.password_hash = await bcrypt.hash(user.password, 8);
+                        user.password = await bcrypt.hash(user.password, 8);
                     }
                 }
             }
@@ -46,7 +45,7 @@ class UserModel extends Model {
 
     checkPassword(password) {
 
-        return bcrypt.compare(password, this.password_hash);
+        return bcrypt.compare(password, this.password);
     }
 
     generateToken() {

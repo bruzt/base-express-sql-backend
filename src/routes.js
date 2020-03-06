@@ -1,6 +1,7 @@
 const express = require('express');
 
 const autoRequireAll = require('./util/autoRequireAll');
+const verifyJwt = require('./util/verifyJwt');
 
 const controllers = autoRequireAll(__dirname, './controllers');
 
@@ -24,6 +25,8 @@ router.post('/users/:user_id/techs', controllers.techController.store);
 router.put('/users/:user_id/techs/:id', controllers.techController.update);
 router.delete('/users/:user_id/techs/:id', controllers.techController.destroy);
 
-router.get('/report', controllers.reportController.show);
+router.get('/report', verifyJwt, controllers.reportController.show);
+
+router.post('/sessions', controllers.sessionController.store);
 
 module.exports = router;

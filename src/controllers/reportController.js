@@ -11,23 +11,26 @@ module.exports = {
         try {
 
             const user = await UserModel.findAll({
-                //attributes: ['name', 'email'],                
+                attributes: ['id', 'name', 'email'],            
                 where: {
                     email: { [iLike]: '%'},
                 },
                 include: [ 
-                    {   // INNER JOIN
-                        association: 'addresses',
+                    {   
+                        association: 'addresses', // INNER JOIN
+                        attributes: ['id', 'zipcode', 'street', 'number'],            
                         where: {
                             street: { [iLike]: '%' } 
                         }
                     },
                     {   
                         association: 'techs',
+                        required: false, // LEFT JOIN
+                        attributes: ['id', 'name'], 
+                        through: { attributes: [] },    
                         where: {
                             name: { [iLike]: '%' }
-                        },
-                        required: false, // LEFT JOIN
+                        }
                     }
                 ]
             });

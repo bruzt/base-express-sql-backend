@@ -59,6 +59,8 @@ module.exports = {
 
             const [ address ] = await AddressModel.update({ user_id, zipcode, street, number }, { where: { id } });
 
+            if(address == 0) return res.status(400).json({ error: "address not found"});
+            
             return res.json(address);
 
         } catch (error) {
