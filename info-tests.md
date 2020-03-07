@@ -22,8 +22,6 @@ sudo docker exec -ti postgres-tests psql -d tests -U cliente1 -W
 # Sequelize Migrations
 
 ```
-npm i sequelize-cli --save-dev
-
 npx sequelize migration:create --name name-the-migration
 
 npx sequelize db:migrate
