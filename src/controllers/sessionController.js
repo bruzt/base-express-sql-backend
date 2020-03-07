@@ -7,6 +7,10 @@ module.exports = {
 
         const { email, password } = req.body;
 
+        if(!email || !password){
+            return res.status(400).json({ error: 'one or more fields are missing' });
+        }
+
         try {
             
             const user = await UserModel.findOne({ where: { email }});

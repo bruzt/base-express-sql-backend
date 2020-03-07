@@ -22,6 +22,10 @@ module.exports = {
 
         const { id } = req.params;
 
+        if(isNaN(id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
+
         try {
             
             const user = await UserModel.findByPk(id);
@@ -41,6 +45,10 @@ module.exports = {
     async store(req, res){
 
         const { name, email, age, password } = req.body;
+
+        if(!name || !email || !age || !password){
+            return res.status(400).json({ error: 'one or more fields are missing' });
+        }
         
         try {
             
@@ -60,11 +68,15 @@ module.exports = {
 
         const { id } = req.params;
 
-        const { name, email, age } = req.body;
+        if(isNaN(id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
+
+        const { name, email, age, password } = req.body;
 
         try {
 
-            const [ updated ] = await UserModel.update({ name, email, age }, { where: { id } });
+            const [ updated ] = await UserModel.update({ name, email, age, password }, { where: { id } });
             
             if(updated === 0) return res.status(400).json({ error: 'user not found'});
 
@@ -79,6 +91,10 @@ module.exports = {
     async destroy(req, res){
 
         const { id } = req.params;
+
+        if(isNaN(id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
 
         try {
 

@@ -34,9 +34,17 @@ describe('userController Test Suit', () => {
         expect(user.id).toBe(response.body.id);
     });
 
-    it('shoud return code 400 for user not found - show', async () => {
+    it('shoud return code 400 for "user not found" - show', async () => {
         
         const response = await supertest(app).get(`/users/22`);
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "id referance must be a number" - show', async () => {
+        
+        const response = await supertest(app).get(`/users/j`);
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty("error");
@@ -55,6 +63,17 @@ describe('userController Test Suit', () => {
         expect(response.body.name).toBe('teste');
     });
 
+    it('shoud return code 400 for "one or more fields are missing" - store', async () => {
+
+        const response = await supertest(app).post('/users').send({
+            name: 'teste',
+            email: 'teste@teste.com',
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+    });
+
     it('shoud update a user on db', async () => {
 
         await factories.create('User');
@@ -66,7 +85,15 @@ describe('userController Test Suit', () => {
         expect(response.status).toBe(200);
     });
 
-    it('shoud return code 400 for user not found - update', async () => {
+    it('shoud return code 400 for "id referance must be a number" - update', async () => {
+        
+        const response = await supertest(app).put(`/users/k`);
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "user not found" - update', async () => {
 
         const response = await supertest(app).put('/users/10').send({
             name: 'test'
@@ -85,7 +112,15 @@ describe('userController Test Suit', () => {
         expect(response.status).toBe(200);
     });
 
-    it('shoud return code 400 for user not found - delete', async () => {
+    it('shoud return code 400 for "id referance must be a number" - delete', async () => {
+        
+        const response = await supertest(app).delete(`/users/m`);
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "user not found" - delete', async () => {
 
         const response = await supertest(app).delete('/users/1');
         

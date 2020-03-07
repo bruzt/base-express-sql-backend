@@ -35,4 +35,34 @@ describe('reportController Test Suit', () => {
         expect(response.body[0].techs.length).toBe(3);
     });
 
+    it('shoud not allow access without JWT token', async () => {
+
+        const response = await supertest(app).get('/report');
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud not allow access if token is bad formatted', async () => {
+
+        const user = await factories.create('User');
+
+        const response = await supertest(app).get('/report').set(
+            'authorization', user.generateToken()
+        );
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud not allow access if token is wrong', async () => {
+
+        const response = await supertest(app).get('/report').set(
+            'authorization', `Bearer re1se59rh9st1h91`
+        );
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
 });

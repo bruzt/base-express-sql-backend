@@ -25,7 +25,15 @@ describe('addressController Test Suit', () => {
         expect(response.body[0].user_id).toBe(user.id);
     });
 
-    it('shoud return code 400 for user not found - index', async () => {
+    it('shoud return code 400 for "id reference must be a number" - index', async () => {
+
+        const response = await supertest(app).get(`/users/b/addresses`)
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "user not found" - index', async () => {
 
         const response = await supertest(app).get(`/users/2/addresses`)
         
@@ -47,7 +55,30 @@ describe('addressController Test Suit', () => {
         expect(parseInt(response.body.user_id)).toBe(user.id);
     });
 
-    it('shoud return code 400 for user not found - store', async () => {
+    it('shoud return code 400 for "user_id reference must be a number" - store', async () => {
+
+        const response = await supertest(app).post(`/users/c/addresses`).send({
+            zipcode: '21119624',
+            street: 'rua tal do tal',
+            number: 15
+        });
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "one or more fields are missing" - store', async () => {
+
+        const response = await supertest(app).post(`/users/1/addresses`).send({
+            zipcode: '21119624',
+            number: 15
+        });
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "user not found" - store', async () => {
         
         const response = await supertest(app).post(`/users/3/addresses`).send({
             zipcode: '21119624',
@@ -75,9 +106,31 @@ describe('addressController Test Suit', () => {
         expect(response.body).toBe(1);
     });
 
-    it('shoud return code 400 for user not found - update', async () => {
+    it('shoud return code 400 for "id reference must be a number" - update', async () => {
+
+        const response = await supertest(app).put(`/users/1/addresses/d`).send({
+            street: 'rua test'
+        });
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "user not found" - update', async () => {
 
         const response = await supertest(app).put(`/users/4/addresses/5`).send({
+            street: 'rua test'
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "address not found" - update', async () => {
+
+        const user = await factories.create('User');
+
+        const response = await supertest(app).put(`/users/${user.id}/addresses/5`).send({
             street: 'rua test'
         });
 
@@ -98,7 +151,15 @@ describe('addressController Test Suit', () => {
         expect(response.status).toBe(200);
     });
 
-    it('shoud return code 400 for user not found - Destroy', async () => {
+    it('shoud return code 400 for "id referance must be a number" - Destroy', async () => {
+
+        const response = await supertest(app).delete(`/users/e/addresses/1`);
+        
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
+    it('shoud return code 400 for "user not found" - Destroy', async () => {
 
         const response = await supertest(app).delete(`/users/9/addresses/1`);
         
@@ -106,7 +167,7 @@ describe('addressController Test Suit', () => {
         expect(response.body).toHaveProperty("error");
     });
 
-    it('shoud return code 400 for address not found', async () => {
+    it('shoud return code 400 for "address not found" - delete', async () => {
 
         const user = await factories.create('User');
 

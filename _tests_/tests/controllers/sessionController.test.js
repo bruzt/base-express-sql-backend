@@ -31,6 +31,16 @@ describe('sessionController Test Suit', () => {
         expect(user.id).toBe(id);
     });
 
+    it('should return code 400 for "one or more fields are missing"', async () => {
+
+        const response = await supertest(app).post('/sessions').send({
+            email: 'test@test.com',
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("error");
+    });
+
     it('should not authenticated if user not exists', async () => {
 
         const response = await supertest(app).post('/sessions').send({

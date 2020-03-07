@@ -6,6 +6,10 @@ module.exports = {
     async index(req, res){
 
         const { user_id } = req.params;
+        
+        if(isNaN(user_id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
 
         try {
 
@@ -27,7 +31,15 @@ module.exports = {
 
         const { user_id } = req.params;
 
+        if(isNaN(user_id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
+
         const { zipcode, street, number } = req.body;
+
+        if(!zipcode || !street || !number){
+            return res.status(400).json({ error: 'one or more fields are missing' });
+        }
         
         try {
 
@@ -48,6 +60,10 @@ module.exports = {
     async update(req, res){
 
         const { user_id, id } = req.params;
+
+        if(isNaN(user_id) || isNaN(id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
 
         const { zipcode, street, number } = req.body;
 
@@ -72,6 +88,10 @@ module.exports = {
     async destroy(req, res){
 
         const { user_id, id } = req.params;
+
+        if(isNaN(user_id) || isNaN(id)){
+            return res.status(400).json({ error: 'id referance must be a number' })
+        }
 
         try {
 
