@@ -7,9 +7,7 @@ module.exports = {
 
         const { user_id } = req.params;
 
-        if(isNaN(user_id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(user_id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         try {
 
@@ -31,9 +29,7 @@ module.exports = {
 
         const { user_id } = req.params;
 
-        if(isNaN(user_id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(user_id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         const { name } = req.body;
 
@@ -65,9 +61,7 @@ module.exports = {
 
         const { user_id, id } = req.params;
 
-        if(isNaN(user_id) || isNaN(id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(user_id) || isNaN(id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         const { name } = req.body;
 
@@ -91,9 +85,7 @@ module.exports = {
 
         const { user_id, id } = req.params;
 
-        if(isNaN(user_id) || isNaN(id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(user_id) || isNaN(id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         try {
 

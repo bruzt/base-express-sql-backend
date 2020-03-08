@@ -22,9 +22,7 @@ module.exports = {
 
         const { id } = req.params;
 
-        if(isNaN(id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         try {
             
@@ -46,9 +44,7 @@ module.exports = {
 
         const { name, email, age, password } = req.body;
 
-        if(!name || !email || !age || !password){
-            return res.status(400).json({ error: 'one or more fields are missing' });
-        }
+        if(!name || !email || !age || !password) return res.status(400).json({ error: 'one or more fields are missing' });
         
         try {
             
@@ -68,9 +64,7 @@ module.exports = {
 
         const { id } = req.params;
 
-        if(isNaN(id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         const { name, email, age, password } = req.body;
 
@@ -92,9 +86,7 @@ module.exports = {
 
         const { id } = req.params;
 
-        if(isNaN(id)){
-            return res.status(400).json({ error: 'id referance must be a number' })
-        }
+        if(isNaN(id)) return res.status(400).json({ error: 'id referance must be a number' });
 
         try {
 
