@@ -20,7 +20,7 @@ class UserModel extends Model {
             hooks: {
                 beforeSave: async (user) => {
                     
-                    if (user.password) {
+                    if(user._changed.password){
 
                         user.password = await bcrypt.hash(user.password, 8);
                     }
@@ -50,7 +50,9 @@ class UserModel extends Model {
 
     generateToken() {
 
-        return jwt.sign({ id: this.id }, process.env.APP_SECRET);
+        return jwt.sign({ id: this.id }, process.env.APP_SECRET, {
+            expiresIn: "12h"
+        });
     }
 }
 

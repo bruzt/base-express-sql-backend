@@ -8,7 +8,7 @@ module.exports = {
             
             const users = await UserModel.findAll();
 
-            users.forEach( (user) => user.password = undefined);
+            //users.forEach( (user) => user.password = undefined);
         
             return res.json(users);
 
@@ -66,11 +66,12 @@ module.exports = {
 
         if(isNaN(id)) return res.status(400).json({ error: 'id referance must be a number' });
 
-        const { name, email, age, password } = req.body;
-
         try {
 
-            const [ updated ] = await UserModel.update({ name, email, age, password }, { where: { id } });
+            const [ updated ] = await UserModel.update(req.body, { 
+                where: { id }, 
+                individualHooks: true 
+            });
             
             if(updated === 0) return res.status(400).json({ error: 'user not found'});
 
