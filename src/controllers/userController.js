@@ -8,7 +8,7 @@ module.exports = {
             
             const users = await UserModel.findAll();
 
-            //users.forEach( (user) => user.password = undefined);
+            users.forEach( (user) => user.password = undefined);
         
             return res.json(users);
 

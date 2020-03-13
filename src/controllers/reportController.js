@@ -8,19 +8,21 @@ module.exports = {
 
         const iLike = (process.env.NODE_ENV === 'test') ? Op.like : Op.iLike;
 
+        const { email, street, tech } = req.body;
+
         try {
 
             const user = await UserModel.findAll({
                 attributes: ['id', 'name', 'email'],            
                 where: {
-                    email: { [iLike]: '%'},
+                    email: { [iLike]: `%${email}%`},
                 },
                 include: [ 
                     {   
                         association: 'addresses', // INNER JOIN
                         attributes: ['id', 'zipcode', 'street', 'number'],            
                         where: {
-                            street: { [iLike]: '%' } 
+                            street: { [iLike]: `%${street}%` } 
                         }
                     },
                     {   
@@ -29,7 +31,7 @@ module.exports = {
                         attributes: ['id', 'name'], 
                         through: { attributes: [] },    
                         where: {
-                            name: { [iLike]: '%' }
+                            name: { [iLike]: `%${tech}%` }
                         }
                     }
                 ]

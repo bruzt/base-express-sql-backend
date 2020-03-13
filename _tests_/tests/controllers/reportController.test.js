@@ -26,10 +26,15 @@ describe('reportController Test Suit', () => {
         await user.addTech(tech2);
         await user.addTech(tech3);
 
-        const response = await supertest(app).get('/report').set(
+        const response = await supertest(app).get('/report')
+        .set(
             'authorization', `Bearer ${user.generateToken()}`
-        );
-        
+        ).send({
+            email: '%',
+            street: '%',
+            tech: '%',
+        });
+
         expect(response.status).toBe(200);
         expect(response.body[0].addresses.length).toBe(2);
         expect(response.body[0].techs.length).toBe(3);
