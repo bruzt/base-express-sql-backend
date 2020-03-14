@@ -8,7 +8,11 @@ module.exports = {
 
         const iLike = (process.env.NODE_ENV === 'test') ? Op.like : Op.iLike;
 
-        const { email, street, tech } = req.body;
+        let { email, street, tech } = req.body;
+
+        if(! email || email == '*') email = '%';
+        if(! street || street == '*') street = '%';
+        if(! tech || tech == '*') tech = '%';
 
         try {
 

@@ -30,9 +30,9 @@ describe('reportController Test Suit', () => {
         .set(
             'authorization', `Bearer ${user.generateToken()}`
         ).send({
-            email: '%',
-            street: '%',
-            tech: '%',
+            email: '*',
+            street: '*',
+            tech: '*',
         });
 
         expect(response.status).toBe(200);
