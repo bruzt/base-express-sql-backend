@@ -7,17 +7,15 @@ module.exports = {
 
         const { email, password } = req.body;
 
-        if(!email || !password) return res.status(400).json({ error: 'one or more fields are missing' });
-
         try {
             
             const user = await UserModel.findOne({ where: { email }});
     
-            if(! user) return res.status(400).send({ error: "user or password not found" });
+            if(! user) return res.status(400).send({ error: "user or password is incorrect" });
     
             const comparePassword = await user.checkPassword(password);
     
-            if(! comparePassword) return res.status(400).json({ error: "user or password not found" });
+            if(! comparePassword) return res.status(400).json({ error: "user or password is incorrect" });
     
             user.password = undefined;
 

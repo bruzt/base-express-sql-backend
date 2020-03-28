@@ -6,7 +6,7 @@ module.exports = {
     // automock: false,
 
     // Stop running tests after `n` failures
-    bail: 1,
+    // bail: 1,
 
     // Respect "browser" field in package.json when resolving modules
     // browser: false,
@@ -24,7 +24,7 @@ module.exports = {
     collectCoverageFrom: ["src/**", "!src/server.js", "!src/database/migrations/*"],
 
     // The directory where Jest should output its coverage files
-    coverageDirectory: "_tests_/coverage",
+    coverageDirectory: "_tests/coverage",
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: [
@@ -142,7 +142,7 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     testMatch: [
-        "**/_tests_/**/*.test.js?(x)"
+        "**/_tests/**/*.test.js?(x)"
     ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

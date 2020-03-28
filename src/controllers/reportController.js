@@ -10,9 +10,9 @@ module.exports = {
 
         let { email, street, tech } = req.body;
 
-        if(! email || email == '*') email = '%';
-        if(! street || street == '*') street = '%';
-        if(! tech || tech == '*') tech = '%';
+        if(!email || email == '*') email = '%';
+        if(!street || street == '*') street = '%';
+        if(!tech || tech == '*') tech = '%';
 
         try {
 

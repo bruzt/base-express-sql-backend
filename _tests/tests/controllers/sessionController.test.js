@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const truncate = require('../../utils/truncate');
 const factories = require('../../utils/factories');
-const app = require('../../../src/App');
+const app = require('../../../src/app');
 
 
 describe('sessionController Test Suit', () => {

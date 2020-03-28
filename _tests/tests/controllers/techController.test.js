@@ -2,7 +2,7 @@ const supertest = require('supertest');
 
 const truncate = require('../../utils/truncate');
 const factories = require('../../utils/factories');
-const app = require('../../../src/App');
+const app = require('../../../src/app');
 
 describe('techController Test Suit', () => {
 

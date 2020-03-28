@@ -2,7 +2,7 @@ const supertest = require('supertest');
 
 const truncate = require('../../utils/truncate');
 const factories = require('../../utils/factories');
-const app = require('../../../src/App');
+const app = require('../../../src/app');
 
 describe('addressController Test Suit', () => {
 
@@ -48,7 +48,7 @@ describe('addressController Test Suit', () => {
         const response = await supertest(app).post(`/users/${user.id}/addresses`).send({
             zipcode: '21119624',
             street: 'rua tal do tal',
-            number: 15
+            number: '15'
         });
 
         expect(response.status).toBe(200);

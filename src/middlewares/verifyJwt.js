@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
 
     const { authorization } = req.headers;
 
-    if(! authorization) return res.status(400).json({ error: 'invalid credentials' });
+    //if(! authorization) return res.status(400).json({ error: 'invalid credentials' });
 
     const splitBearer = authorization.split(' ');
 

@@ -4,32 +4,22 @@ require('dotenv').config({
 
 const express = require('express');
 const cors = require('cors');
+const { errors } = require('celebrate');
 const path = require('path');
 
 const routes = require('./routes');
 require('./database/connection');
 
-class App {
+const app = express();
+ 
+app.use(cors({ origin: '*' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-    constructor(){
+app.use(express.static(path.resolve(__dirname, 'views')));
+    
+app.use(routes);
 
-        this.express = express();
-
-        this.middlewares();
-        this.routes();
-    }
-
-    middlewares(){
-        this.express.use(cors({ origin: '*' }));
-        this.express.use(express.json());
-        this.express.use(express.urlencoded({ extended: true }));
-        this.express.use(express.static(path.resolve(__dirname, 'views')));
-    }
-
-    routes(){
-
-        this.express.use(routes);
-    }
-}
-
-module.exports = new App().express;
+app.use(errors());
+    
+module.exports = app;
