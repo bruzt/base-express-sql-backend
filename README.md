@@ -7,3 +7,4 @@ Código refêrencia para a construção de uma API REST no padrão MVC usando:
  - [JWT](https://www.npmjs.com/package/jsonwebtoken) para autenticação de usuário;
  - Variáveis de ambiente com [cross-env](https://www.npmjs.com/package/cross-env) e [dotenv](https://www.npmjs.com/package/dotenv);
  - [Nodemon](https://www.npmjs.com/package/nodemon) para execução do app em ambiente de desenvolvimento e [PM2](https://www.npmjs.com/package/pm2) para produção;
+ - [ESLint](https://www.npmjs.com/package/eslint) para identificar erros no código.
