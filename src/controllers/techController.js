@@ -1,70 +1,65 @@
-const UserModel = require('../models/UserModel');
 const TechModel = require('../models/TechModel');
 
 module.exports = {
 
     async index(req, res){
 
-        const { user_id } = req.params;
-
         try {
 
-            const user = await UserModel.findByPk(user_id, {
-                include: { association: 'techs', through: { attributes: [] } }
-            });
+            const techs = await TechModel.findAll();
 
-            if(! user) return res.status(400).json({ error: 'User not found' });
-        
-            return res.json(user.techs);
-
+            return res.json(techs);
+            
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "internal error" });
         }
     },
-    
+
+    async show(req, res){
+
+        const { tech_id } = req.params;
+
+        try {
+
+            const techs = await TechModel.findByPk(tech_id);
+
+            return res.json(techs);
+            
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "internal error" });
+        }
+    },
+
     async store(req, res){
 
-        const { user_id } = req.params;
-
         const { name } = req.body;
-        
+
         try {
 
-            const user = await UserModel.findByPk(user_id);
+            const tech = await TechModel.create({ name });
 
-            if(! user) return res.status(400).json({ error: 'User not found' });       
-            
-            const [ tech ] = await TechModel.findOrCreate({
-                where: { name }
-            });
-
-            await user.addTech(tech);  
-    
             return res.json(tech);
-
+            
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "internal error" });
         }
     },
 
-    async update(req, res){
+    async update(req,res){
 
-        const { user_id, id } = req.params;
+        const { id } = req.params;
 
         const { name } = req.body;
 
         try {
 
-            const user = await UserModel.findByPk(user_id);
-
-            if(! user) return res.status(400).json({ error: 'User not found' });       
-            
             const [ tech ] = await TechModel.update({ name }, { where: { id } });
     
             return res.json(tech);
-
+            
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "internal error" });
@@ -73,17 +68,11 @@ module.exports = {
 
     async destroy(req, res){
 
-        const { user_id, id } = req.params;
+        const { id } = req.params;
 
         try {
 
-            const user = await UserModel.findByPk(user_id);
-
-            if(! user) return res.status(400).json({ error: "user not found" });
-
-            const tech = await TechModel.findByPk(id);
-
-            await user.removeTech(tech);  
+            await TechModel.destroy({ where: { id } });
 
             return res.sendStatus(200);
             

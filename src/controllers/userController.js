@@ -64,12 +64,17 @@ module.exports = {
 
         try {
 
-            const [ updated ] = await UserModel.update({ name, email, age, password }, { 
-                where: { id }, 
-                individualHooks: true 
-            });
-            
-            if(updated === 0) return res.status(400).json({ error: 'user not found'});
+            const user = await UserModel.findByPk(id);
+
+            if(!user) return res.status(400).json({ error: 'user not found'});
+
+            if(name || email || age || password){
+
+                await user.update({ name, email, age, password }, { 
+                    where: { id }, 
+                    individualHooks: true 
+                });
+            }
 
             return res.sendStatus(200);
 

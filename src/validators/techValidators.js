@@ -2,17 +2,13 @@ const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
 
-    index: celebrate({
+    show: celebrate({
         [Segments.PARAMS]: Joi.object().keys({
-            user_id: Joi.number().required()
+            tech_id: Joi.number().required()
         })
     }),
 
     store: celebrate({
-        [Segments.PARAMS]: Joi.object().keys({
-            user_id: Joi.number().required()
-        }),
-
         [Segments.BODY]: Joi.object().keys({
             name: Joi.string().required()
         })
@@ -21,7 +17,6 @@ module.exports = {
     update: celebrate({
         [Segments.PARAMS]: Joi.object().keys({
             id: Joi.number().required(),
-            user_id: Joi.number().required()
         }),
 
         [Segments.BODY]: Joi.object().keys({
@@ -32,7 +27,6 @@ module.exports = {
     destroy: celebrate({
         [Segments.PARAMS]: Joi.object().keys({
             id: Joi.number().required(),
-            user_id: Joi.number().required()
         })
     })
 }
