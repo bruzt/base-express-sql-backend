@@ -22,9 +22,11 @@ module.exports = {
 
         try {
 
-            const techs = await TechModel.findByPk(tech_id);
+            const tech = await TechModel.findByPk(tech_id);
 
-            return res.json(techs);
+            if(!tech) return res.status(400).json({ error: 'tech not found' });
+
+            return res.json(tech);
             
         } catch (error) {
             console.error(error);
@@ -56,9 +58,11 @@ module.exports = {
 
         try {
 
-            const [ tech ] = await TechModel.update({ name }, { where: { id } });
+            const [ updated ] = await TechModel.update({ name }, { where: { id } });
+
+            if(updated == 0) return res.status(400).json({ error: 'tech not found '});
     
-            return res.json(tech);
+            return res.sendStatus(200);
             
         } catch (error) {
             console.error(error);
@@ -72,7 +76,9 @@ module.exports = {
 
         try {
 
-            await TechModel.destroy({ where: { id } });
+            const deleted = await TechModel.destroy({ where: { id } });
+
+            if(deleted == 0) return res.status(400).json({ error: 'tech not found'});
 
             return res.sendStatus(200);
             
