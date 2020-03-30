@@ -80,10 +80,10 @@ describe('addressController Test Suit', () => {
 
     it('should return code 400 for "user not found" - store', async () => {
         
-        const response = await supertest(app).post(`/users/3/addresses`).send({
+        const response = await supertest(app).post(`/users/30/addresses`).send({
             zipcode: '21119624',
             street: 'rua tal do tal',
-            number: 15
+            number: '15'
         });
 
         expect(response.status).toBe(400);
