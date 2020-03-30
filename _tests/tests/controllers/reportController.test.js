@@ -11,7 +11,7 @@ describe('reportController Test Suit', () => {
         return truncate();
     });
 
-    it('shoud show all users, its addresses and, if have it, its techs', async () => {
+    it('should show all users, its addresses and, if have it, its techs', async () => {
 
         const user = await factories.create('User');
 
@@ -40,7 +40,7 @@ describe('reportController Test Suit', () => {
         expect(response.body[0].techs.length).toBe(3);
     });
 
-    it('shoud not allow access without JWT token', async () => {
+    it('should not allow access without JWT token', async () => {
 
         const response = await supertest(app).get('/report');
         
@@ -48,7 +48,7 @@ describe('reportController Test Suit', () => {
         expect(response.body).toHaveProperty("error");
     });
 
-    it('shoud not allow access if token is bad formatted', async () => {
+    it('should not allow access if token is bad formatted', async () => {
 
         const user = await factories.create('User');
 
@@ -60,7 +60,7 @@ describe('reportController Test Suit', () => {
         expect(response.body).toHaveProperty("error");
     });
 
-    it('shoud not allow access if token is wrong', async () => {
+    it('should not allow access if token is wrong', async () => {
 
         const response = await supertest(app).get('/report').set(
             'authorization', `Bearer re1se59rh9st1h91`

@@ -27,7 +27,7 @@ describe('userTechController Test Suit', () => {
         expect(response.body.length).toBe(2);
     });
 
-    it('shoud return code 400 for  "user_id must be a number" - index', async () => {
+    it('should return code 400 for  "user_id must be a number" - index', async () => {
         
         const response = await supertest(app).get(`/users/f/techs`);
 
@@ -36,7 +36,7 @@ describe('userTechController Test Suit', () => {
         expect(response.body.validation.keys[0]).toBe("user_id");
     });
 
-    it('shoud return code 400 for "user not found" - index', async () => {
+    it('should return code 400 for "user not found" - index', async () => {
         
         const response = await supertest(app).get(`/users/1/techs`);
 
@@ -54,7 +54,7 @@ describe('userTechController Test Suit', () => {
         expect(response.status).toBe(200);
     });
 
-    it('shoud return code 400 for "user_id referance must be a number" - store', async () => {
+    it('should return code 400 for "user_id referance must be a number" - store', async () => {
         
         const response = await supertest(app).post(`/users/g/techs/1`);
 
@@ -63,7 +63,7 @@ describe('userTechController Test Suit', () => {
         expect(response.body.validation.keys[0]).toBe("user_id");
     });
 
-    it('shoud return code 400 for "tech_id referance must be a number" - store', async () => {
+    it('should return code 400 for "tech_id referance must be a number" - store', async () => {
         
         const response = await supertest(app).post(`/users/1/techs/j`);
 
@@ -72,7 +72,7 @@ describe('userTechController Test Suit', () => {
         expect(response.body.validation.keys[0]).toBe("tech_id");
     });
 
-    it('shoud return code 400 for "user not found" - store', async () => {
+    it('should return code 400 for "user not found" - store', async () => {
         
         const response = await supertest(app).post(`/users/3/techs/2`);
 
@@ -80,7 +80,7 @@ describe('userTechController Test Suit', () => {
         expect(response.body).toHaveProperty("error");
     });
 
-    it('shoud return code 400 for "user not found" - store', async () => {
+    it('should return code 400 for "user not found" - store', async () => {
 
         const user = await factories.create('User');
         
@@ -103,7 +103,7 @@ describe('userTechController Test Suit', () => {
         expect(response.status).toBe(200);
     });
 
-    it('shoud return code 400 for "user_id referance must be a number" - delete', async () => {
+    it('should return code 400 for "user_id referance must be a number" - delete', async () => {
         
         const response = await supertest(app).delete(`/users/i/techs/2`);
 
@@ -112,7 +112,7 @@ describe('userTechController Test Suit', () => {
         expect(response.body.validation.keys[0]).toBe("user_id");
     });
 
-    it('shoud return code 400 for "tech_id referance must be a number" - delete', async () => {
+    it('should return code 400 for "tech_id referance must be a number" - delete', async () => {
         
         const response = await supertest(app).delete(`/users/1/techs/p`);
 
@@ -121,14 +121,14 @@ describe('userTechController Test Suit', () => {
         expect(response.body.validation.keys[0]).toBe("tech_id");
     });
 
-    it('shoud return code 400 for "user not found" - delete', async () => {
+    it('should return code 400 for "user not found" - delete', async () => {
         
         const response = await supertest(app).delete(`/users/1/techs/2`);
 
         expect(response.status).toBe(400);
     });
 
-    it('shoud return code 400 for "tech not found" - delete', async () => {
+    it('should return code 400 for "tech not found" - delete', async () => {
 
         const user = await factories.create('User');
         
