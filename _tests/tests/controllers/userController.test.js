@@ -13,15 +13,15 @@ describe('userController Test Suit', () => {
 
     it('should show all users on db', async () => {
 
-            for(let i=0; i < 3; i++){
+        for(let i=0; i < 3; i++){
 
-                await factories.create('User');
-            }
-    
-            const response = await supertest(app).get('/users')
-            
-            expect(response.status).toBe(200);
-            expect(Object.keys(response.body).length).toBe(3);
+            await factories.create('User');
+        }
+
+        const response = await supertest(app).get('/users')
+        
+        expect(response.status).toBe(200);
+        expect(Object.keys(response.body).length).toBe(3);
     });
 
     it('should show a specific user on db', async () => {
