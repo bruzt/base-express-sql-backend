@@ -9,7 +9,7 @@ const validators = autoRequireAll(__dirname, './middlewares/validators');
 const router = express.Router();
 
 // VIEW ESTÁTICA
-router.get('/', controllers.indexController.index);
+//router.get('/', controllers.indexController.index);
 
 // ADICIONA, ALTERA OU REMOVE UM USUÁRIO
 router.get('/users', controllers.userController.index);
