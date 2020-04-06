@@ -4,7 +4,7 @@ const autoRequireAll = require('./util/autoRequireAll');
 const verifyJwt = require('./middlewares/verifyJwt');
 
 const controllers = autoRequireAll(__dirname, './controllers');
-const validators = autoRequireAll(__dirname, './validators');
+const validators = autoRequireAll(__dirname, './middlewares/validators');
 
 const router = express.Router();
 
