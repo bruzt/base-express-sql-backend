@@ -46,6 +46,8 @@ module.exports = {
         const { token, password } = req.body;
 
         const [id, rawToken] = token.split('#');
+
+        if(isNaN(id)) return res.status(400).json({ error: 'invalid token' });
        
         try {
 
