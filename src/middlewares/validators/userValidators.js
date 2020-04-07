@@ -12,7 +12,6 @@ module.exports = {
         [Segments.BODY]: Joi.object().keys({
             name: Joi.string().required(), 
             email: Joi.string().email().required(), 
-            age: Joi.number().required(), 
             password: Joi.string().required().min(6),
         }),
     }),
@@ -24,9 +23,7 @@ module.exports = {
 
         [Segments.BODY]: Joi.object().keys({
             name: Joi.string(), 
-            email: Joi.string().email(), 
-            age: Joi.number(), 
-            password: Joi.string().min(6),
+            email: Joi.string().email()
         }),
     }),
 

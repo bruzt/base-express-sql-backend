@@ -11,8 +11,9 @@ class UserModel extends Model {
 
             name: DataTypes.STRING,
             email: DataTypes.STRING,
-            age: DataTypes.INTEGER,
             password: DataTypes.STRING,
+            reset_password_token: DataTypes.STRING,
+            reset_password_expires: DataTypes.DATE,
 
         }, {
             tableName: 'users',

@@ -40,15 +40,19 @@ module.exports = {
     
     async store(req, res){
 
-        const { name, email, age, password } = req.body;
+        const { name, email, password } = req.body;
         
         try {
-            
-            const user = await UserModel.create({ name, email, age, password });
-    
-            user.password = undefined;
 
-            return res.json(user);
+            const user = await UserModel.findOne({ email });
+
+            if(user) return res.status(400).json({ error: 'email already in use' });
+            
+            const newUser = await UserModel.create({ name, email, password });
+    
+            newUser.password = undefined;
+
+            return res.json(newUser);
 
         } catch (error) {
             console.error(error);
@@ -60,11 +64,11 @@ module.exports = {
 
         const { id } = req.params;
 
-        const { name, email, age, password } = req.body;
+        const { name, email } = req.body;
 
         try {
 
-            const [ updated ] = await UserModel.update({ name, email, age, password }, { 
+            const [ updated ] = await UserModel.update({ name, email }, { 
                 where: { id }, 
                 individualHooks: true 
             });

@@ -24,6 +24,10 @@ router.post('/users/:user_id/addresses', validators.addressValidators.store, con
 router.put('/users/:user_id/addresses/:id', validators.addressValidators.update, controllers.addressController.update);
 router.delete('/users/:user_id/addresses/:id', validators.addressValidators.destroy, controllers.addressController.destroy);
 
+// UPDATE DE SENHA POR EMAIL
+router.post('/users/reset-password', validators.userResetPasswordValidator.store, controllers.userResetPasswordController.store);
+router.put('/users/reset-password', validators.userResetPasswordValidator.update, controllers.userResetPasswordController.update);
+
 // ADICIONA, ALTERA OU REMOVE UMA TECNOLOGIA
 router.get('/techs', controllers.techController.index);
 router.get('/techs/:tech_id', validators.techValidators.show, controllers.techController.show);
