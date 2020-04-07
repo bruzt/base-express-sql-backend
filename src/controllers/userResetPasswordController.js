@@ -51,9 +51,11 @@ module.exports = {
 
             if(!user) return res.status(400).json({ error: 'invalid token' });
 
-            if(user.reset_password_expires > Date.now()) return res.status(400).json({ error: 'token expired' });
+            if(Date.now() > user.reset_password_expires) return res.status(400).json({ error: 'token expired' });
 
             user.password = newPassword;
+            user.reset_password_token = null;
+            user.reset_password_expires = null;
 
             await user.save();
 
