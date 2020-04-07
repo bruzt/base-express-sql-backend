@@ -44,7 +44,7 @@ module.exports = {
         
         try {
 
-            const user = await UserModel.findOne({ email });
+            const user = await UserModel.findOne({ where: { email }});
 
             if(user) return res.status(400).json({ error: 'email already in use' });
             

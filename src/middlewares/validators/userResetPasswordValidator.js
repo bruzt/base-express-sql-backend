@@ -11,7 +11,7 @@ module.exports = {
     update: celebrate({
         [Segments.BODY]: Joi.object().keys({
             token: Joi.string().required(),
-            newPassword: Joi.string().required()
+            password: Joi.string().required()
         })
     })
 }

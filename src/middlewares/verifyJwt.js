@@ -12,14 +12,12 @@ module.exports = (req, res, next) => {
 
     try {
         
-        const token = jwt.verify(splitBearer[1], process.env.APP_SECRET);
+        req.tokenPayload = jwt.verify(splitBearer[1], process.env.APP_SECRET);
 
-        req.tokenPayload = token;
+        return next();
 
     } catch(error){
         
         return res.status(400).json({ error: 'invalid credentials' });
     }
-
-    return next();
 }

@@ -15,12 +15,12 @@ module.exports = {
 
             if(!user) return res.status(400).json({ error: 'user not found' });
 
-            const token = crypto.randomBytes(20).toString('hex');
+            const rawToken = crypto.randomBytes(20).toString('hex');
 
             const expires = new Date();
             expires.setHours(expires.getHours() + 1);
 
-            user.reset_password_token = token;
+            user.reset_password_token = rawToken;
             user.reset_password_expires = expires;
 
             await user.save();
@@ -30,7 +30,7 @@ module.exports = {
                 to: email,
                 subject: 'Reset Password',
                 template: 'resetPassword',
-                context: { token }
+                context: { token: user.id + '#' + rawToken }
             });
 
             return res.sendStatus(200);
@@ -43,17 +43,21 @@ module.exports = {
 
     update: async (req, res) => {
 
-        const { token, newPassword } = req.body;
+        const { token, password } = req.body;
 
+        const [id, rawToken] = token.split('#');
+       
         try {
 
-            const user = await UserModel.findOne({ where: { reset_password_token: token }});
+            const user = await UserModel.findByPk(id);
 
-            if(!user) return res.status(400).json({ error: 'invalid token' });
+            if(!user) return res.status(400).json({ error: 'user not found' });
+
+            if(rawToken !== user.reset_password_token) return res.status(400).json({ error: 'invalid token' });
 
             if(Date.now() > user.reset_password_expires) return res.status(400).json({ error: 'token expired' });
 
-            user.password = newPassword;
+            user.password = password;
             user.reset_password_token = null;
             user.reset_password_expires = null;
 
