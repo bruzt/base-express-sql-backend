@@ -5,6 +5,7 @@ Código refêrencia para a construção de uma API REST no padrão MVC usando:
  - [Middleware Celebrate](https://www.npmjs.com/package/celebrate) para a validação de dados recebidos nas rotas;
  - Contrução e execução de testes com [Jest](https://www.npmjs.com/package/jest), [supertest](https://www.npmjs.com/package/supertest), [factory-girl](https://www.npmjs.com/package/factory-girl) e [faker](https://www.npmjs.com/package/faker);
  - [JWT](https://www.npmjs.com/package/jsonwebtoken) para autenticação de usuário;
+ - Alteração da senha por token enviada para email com [Nodemailer](https://www.npmjs.com/package/nodemailer);
  - Variáveis de ambiente com [cross-env](https://www.npmjs.com/package/cross-env) e [dotenv](https://www.npmjs.com/package/dotenv);
  - [Nodemon](https://www.npmjs.com/package/nodemon) para execução do app em ambiente de desenvolvimento e [PM2](https://www.npmjs.com/package/pm2) para produção;
  - [ESLint](https://www.npmjs.com/package/eslint) para identificar erros no código.
