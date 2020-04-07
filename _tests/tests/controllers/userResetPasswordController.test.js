@@ -88,6 +88,17 @@ describe('userResetPasswordController Test Suit', () => {
         expect(response.body).toHaveProperty('error');
     });
 
+    it('should return code 400 for invalid token (invalid id)', async () => {
+
+        const response = await supertest(app).put('/reset-password').send({
+            token: 'a#df4gd54g',
+            password: '123456'
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
+    });
+
     it('should return code 400 for token expired', async () => {
 
         const user = await factories.create('User');
