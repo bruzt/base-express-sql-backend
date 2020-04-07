@@ -15,7 +15,9 @@ describe('userController Test Suit', () => {
 
         for(let i=0; i < 3; i++){
 
-            await factories.create('User');
+            await factories.create('User', {
+                email: `email${i}@teste.com`
+            });
         }
 
         const response = await supertest(app).get('/users')
@@ -55,12 +57,29 @@ describe('userController Test Suit', () => {
         const response = await supertest(app).post('/users').send({
             name: 'teste',
             email: 'teste@teste.com',
-            age: 15,
             password: 'bla123'
         });
 
         expect(response.status).toBe(200);
         expect(response.body.name).toBe('teste');
+    });
+
+    it('should not add a user with same email on db', async () => {
+
+        await supertest(app).post('/users').send({
+            name: 'teste',
+            email: 'teste@teste.com',
+            password: 'bla123'
+        });
+
+        const response = await supertest(app).post('/users').send({
+            name: 'teste',
+            email: 'teste@teste.com',
+            password: 'bla123'
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty('error');
     });
 
     it('should return code 400 for "one or more fields are missing" - store', async () => {
