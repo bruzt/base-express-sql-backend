@@ -6,9 +6,7 @@ module.exports = {
 
         try {
             
-            const users = await UserModel.findAll();
-
-            users.forEach( (user) => user.password = undefined);
+            const users = await UserModel.findAll({ attributes: { exclude: ['password'] }});
         
             return res.json(users);
 
@@ -24,11 +22,9 @@ module.exports = {
 
         try {
             
-            const user = await UserModel.findByPk(id);
+            const user = await UserModel.findByPk(id, { attributes: { exclude: 'password' }});
 
             if(! user) return res.status(400).json({ error: 'user not found'});
-
-            user.password = undefined;
         
             return res.json(user);
 

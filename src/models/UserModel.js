@@ -18,7 +18,6 @@ class UserModel extends Model {
         }, {
             tableName: 'users',
             sequelize: connection,
-            defaultScope: { attributes: { exclude: ['password'] }},
             hooks: {
                 beforeSave: async (user) => {
                     
