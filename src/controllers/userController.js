@@ -64,11 +64,11 @@ module.exports = {
 
         const { id } = req.params;
 
-        const { name, email } = req.body;
+        const { name, email, password } = req.body;
 
         try {
 
-            const [ updated ] = await UserModel.update({ name, email }, { 
+            const [ updated ] = await UserModel.update({ name, email, password }, { 
                 where: { id }, 
                 individualHooks: true 
             });

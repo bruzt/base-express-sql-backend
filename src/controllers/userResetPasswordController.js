@@ -54,9 +54,7 @@ module.exports = {
             const user = await UserModel.findByPk(id);
 
             if(!user) return res.status(400).json({ error: 'user not found' });
-
             if(rawToken !== user.reset_password_token) return res.status(400).json({ error: 'invalid token' });
-
             if(Date.now() > user.reset_password_expires) return res.status(400).json({ error: 'token expired' });
 
             user.password = password;
