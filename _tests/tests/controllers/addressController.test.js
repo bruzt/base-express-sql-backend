@@ -103,7 +103,6 @@ describe('addressController Test Suit', () => {
         });
 
         expect(response.status).toBe(200);
-        expect(response.body).toBe(1);
     });
 
     it('should return code 400 for "id reference must be a number" - update', async () => {
