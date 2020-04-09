@@ -22,10 +22,6 @@ module.exports = {
         })
         .unknown(),
 
-        [Segments.PARAMS]: Joi.object().keys({
-            id: Joi.number().required()
-        }),
-
         [Segments.BODY]: Joi.object().keys({
             name: Joi.string(), 
             email: Joi.string().email(),
@@ -38,9 +34,5 @@ module.exports = {
             authorization: Joi.string().required()
         })
         .unknown(),
-        
-        [Segments.PARAMS]: Joi.object().keys({
-            id: Joi.number().required()
-        }),
     })
 }

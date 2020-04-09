@@ -58,7 +58,7 @@ module.exports = {
 
     async update(req, res){
 
-        const { id } = req.params;
+        const { id } = req.tokenPayload;
 
         const { name, email, password } = req.body;
 
@@ -81,7 +81,7 @@ module.exports = {
 
     async destroy(req, res){
 
-        const { id } = req.params;
+        const { id } = req.tokenPayload;
 
         try {
 

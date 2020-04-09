@@ -5,11 +5,11 @@ module.exports = {
 
     async index(req, res){
 
-        const { user_id } = req.params;
+        const id = req.tokenPayload.id;
 
         try {
 
-            const user = await UserModel.findByPk(user_id, {
+            const user = await UserModel.findByPk(id, {
                 include: { association: 'addresses' }
             });
 
@@ -25,7 +25,7 @@ module.exports = {
     
     async store(req, res){
 
-        const { user_id } = req.params;
+        const user_id = req.tokenPayload.id;
 
         const { zipcode, street, number } = req.body;
         
@@ -47,7 +47,8 @@ module.exports = {
 
     async update(req, res){
 
-        const { user_id, id } = req.params;
+        const id = req.params.id;
+        const user_id = req.tokenPayload.id;
 
         const { zipcode, street, number } = req.body;
 
@@ -76,7 +77,8 @@ module.exports = {
 
     async destroy(req, res){
 
-        const { user_id, id } = req.params;
+        const id = req.params.id;
+        const user_id = req.tokenPayload.id;
 
         try {
 

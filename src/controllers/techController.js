@@ -18,11 +18,11 @@ module.exports = {
 
     async show(req, res){
 
-        const { tech_id } = req.params;
+        const id = req.params.id;
 
         try {
 
-            const tech = await TechModel.findByPk(tech_id);
+            const tech = await TechModel.findByPk(id);
 
             if(!tech) return res.status(400).json({ error: 'tech not found' });
 
@@ -35,6 +35,8 @@ module.exports = {
     },
 
     async store(req, res){
+
+        if(req.tokenPayload.accessLevel < 2) return res.status(400).json({ error: 'not allowed' });
 
         const { name } = req.body;
 
@@ -51,6 +53,8 @@ module.exports = {
     },
 
     async update(req,res){
+
+        if(req.tokenPayload.accessLevel < 2) return res.status(400).json({ error: 'not allowed' });
 
         const { id } = req.params;
 
@@ -71,6 +75,8 @@ module.exports = {
     },
 
     async destroy(req, res){
+
+        if(req.tokenPayload.accessLevel < 2) return res.status(400).json({ error: 'not allowed' });
 
         const { id } = req.params;
 

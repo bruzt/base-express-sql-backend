@@ -5,7 +5,7 @@ module.exports = {
 
     async index(req, res){
 
-        const { user_id } = req.params;
+        const user_id = req.tokenPayload.id;
 
         try {
 
@@ -25,7 +25,8 @@ module.exports = {
 
     async store(req, res){
 
-        const { user_id, tech_id } = req.params;
+        const id = req.params.id;
+        const user_id = req.tokenPayload.id;
 
         try {
 
@@ -33,7 +34,7 @@ module.exports = {
 
             if(!user) return res.status(400).json({ error: 'user not found'});
 
-            const tech = await TechModel.findByPk(tech_id);
+            const tech = await TechModel.findByPk(id);
 
             if(!tech) return res.status(400).json({ error: 'tech not found'});
 
@@ -49,7 +50,8 @@ module.exports = {
 
     async destroy(req, res){
 
-        const { user_id, tech_id } = req.params;
+        const id = req.params.id;
+        const user_id = req.tokenPayload.id;
 
         try {
 
@@ -57,7 +59,7 @@ module.exports = {
 
             if(!user) return res.status(400).json({ error: 'user not found'});
 
-            const tech = await TechModel.findByPk(tech_id);
+            const tech = await TechModel.findByPk(id);
 
             if(!tech) return res.status(400).json({ error: 'tech not found'});
 

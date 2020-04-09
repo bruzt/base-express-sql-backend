@@ -4,7 +4,7 @@ module.exports = {
 
     show: celebrate({
         [Segments.PARAMS]: Joi.object().keys({
-            tech_id: Joi.number().required()
+            id: Joi.number().required()
         })
     }),
 

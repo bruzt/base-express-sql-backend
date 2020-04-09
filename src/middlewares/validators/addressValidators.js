@@ -7,10 +7,6 @@ module.exports = {
             authorization: Joi.string().required()
         })
         .unknown(),
-
-        [Segments.PARAMS]: Joi.object().keys({
-            user_id: Joi.number().required()
-        })
     }),
 
     store: celebrate({
@@ -18,10 +14,6 @@ module.exports = {
             authorization: Joi.string().required()
         })
         .unknown(),
-
-        [Segments.PARAMS]: Joi.object().keys({
-            user_id: Joi.number().required()
-        }),
 
         [Segments.BODY]: Joi.object().keys({
             zipcode: Joi.string().required(),
@@ -38,7 +30,6 @@ module.exports = {
 
         [Segments.PARAMS]: Joi.object().keys({
             id: Joi.number().required(),
-            user_id: Joi.number().required()
         }),
 
         [Segments.BODY]: Joi.object().keys({
@@ -56,7 +47,6 @@ module.exports = {
         
         [Segments.PARAMS]: Joi.object().keys({
             id: Joi.number().required(),
-            user_id: Joi.number().required()
         }),
     })
 }
