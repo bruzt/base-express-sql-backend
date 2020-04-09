@@ -14,38 +14,35 @@ describe('addressController Test Suit', () => {
     it('should show all address of a user', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
         
         await factories.create('Address', {
             user_id: user.id
         });
 
-        const response = await supertest(app).get(`/users/${user.id}/addresses`)
+        const response = await supertest(app).get(`/addresses`)
+        .set('authorization', 'Bearer ' + token);
         
         expect(response.status).toBe(200);
         expect(response.body[0].user_id).toBe(user.id);
     });
 
-    it('should return code 400 for "id reference must be a number" - index', async () => {
+    it('should return code 400 for "authorization is required" - index', async () => {
 
-        const response = await supertest(app).get(`/users/b/addresses`)
+        const response = await supertest(app).get(`/addresses`)
         
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
-    it('should return code 400 for "user not found" - index', async () => {
-
-        const response = await supertest(app).get(`/users/2/addresses`)
-        
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.validation.keys[0]).toBe("authorization");
     });
 
     it('should add a address to an user', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
         
-        const response = await supertest(app).post(`/users/${user.id}/addresses`).send({
+        const response = await supertest(app).post(`/addresses`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
             zipcode: '21119624',
             street: 'rua tal do tal',
             number: '15'
@@ -55,122 +52,93 @@ describe('addressController Test Suit', () => {
         expect(parseInt(response.body.user_id)).toBe(user.id);
     });
 
-    it('should return code 400 for "user_id reference must be a number" - store', async () => {
-
-        const response = await supertest(app).post(`/users/c/addresses`).send({
-            zipcode: '21119624',
-            street: 'rua tal do tal',
-            number: 15
-        });
+    it('should return code 400 for "authorization is required" - store', async () => {
         
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
-    it('should return code 400 for "one or more fields are missing" - store', async () => {
-
-        const response = await supertest(app).post(`/users/1/addresses`).send({
-            zipcode: '21119624',
-            number: 15
-        });
-        
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
-    it('should return code 400 for "user not found" - store', async () => {
-        
-        const response = await supertest(app).post(`/users/30/addresses`).send({
+        const response = await supertest(app).post(`/addresses`)
+        .send({
             zipcode: '21119624',
             street: 'rua tal do tal',
             number: '15'
         });
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.validation.keys[0]).toBe("authorization");
     });
 
     it('should update a address', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
 
         const userAddr = await factories.create('Address', {
             user_id: user.id
         });
 
-        const response = await supertest(app).put(`/users/${user.id}/addresses/${userAddr.id}`).send({
+        const response = await supertest(app).put(`/addresses/${userAddr.id}`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
             street: 'rua test'
         });
 
         expect(response.status).toBe(200);
     });
 
-    it('should return code 400 for "id reference must be a number" - update', async () => {
+    it('should return code 400 for "authorization is required" - update', async () => {
 
-        const response = await supertest(app).put(`/users/1/addresses/d`).send({
-            street: 'rua test'
-        });
-        
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
-    it('should return code 400 for "user not found" - update', async () => {
-
-        const response = await supertest(app).put(`/users/4/addresses/5`).send({
+        const response = await supertest(app).put(`/addresses/5`)
+        .send({
             street: 'rua test'
         });
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.validation.keys[0]).toBe("authorization");
     });
 
     it('should return code 400 for "address not found" - update', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
 
-        const response = await supertest(app).put(`/users/${user.id}/addresses/5`).send({
+        const response = await supertest(app).put(`/addresses/5`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
             street: 'rua test'
         });
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("address not found");
     });
 
     it('should erase a address from a user', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
 
         const userAddr = await factories.create('Address', {
             user_id: user.id
         });
 
-        const response = await supertest(app).delete(`/users/${user.id}/addresses/${userAddr.id}`);
+        const response = await supertest(app).delete(`/addresses/${userAddr.id}`)
+        .set('authorization', 'Bearer ' + token);
         
         expect(response.status).toBe(200);
     });
 
-    it('should return code 400 for "id referance must be a number" - Destroy', async () => {
+    it('should return code 400 for "authorization is required" - Destroy', async () => {
 
-        const response = await supertest(app).delete(`/users/e/addresses/1`);
+        const response = await supertest(app).delete(`/addresses/1`);
         
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
-    it('should return code 400 for "user not found" - Destroy', async () => {
-
-        const response = await supertest(app).delete(`/users/9/addresses/1`);
-        
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.validation.keys[0]).toBe("authorization");
     });
 
     it('should return code 400 for "address not found" - delete', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
 
-        const response = await supertest(app).delete(`/users/${user.id}/addresses/2`);
+        const response = await supertest(app).delete(`/addresses/2`)
+        .set('authorization', 'Bearer ' + token);
         
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty("error");
