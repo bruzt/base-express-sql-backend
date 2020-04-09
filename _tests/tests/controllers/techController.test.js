@@ -52,6 +52,21 @@ describe('userTechController Test Suit', () => {
         expect(response.body.name).toBe('test');
     });
 
+    it('should not create a new tech for "user not allowed" - store', async () => {
+
+        const user = await factories.create('User');
+        const token = user.generateToken();
+
+        const response = await supertest(app).post(`/techs`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
+            name: 'test'
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body.error).toBe('user not allowed');
+    });
+
     it('should update a tech', async () => {
 
         const user = await factories.create('User');
@@ -67,6 +82,21 @@ describe('userTechController Test Suit', () => {
         });
 
         expect(response.status).toBe(200);
+    });
+
+    it('should not create a new tech for "user not allowed" - update', async () => {
+
+        const user = await factories.create('User');
+        const token = user.generateToken();
+
+        const response = await supertest(app).put(`/techs/3`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
+            name: 'test'
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body.error).toBe('user not allowed');
     });
 
     it('should return code 400 for "tech not found" - update', async () => {
@@ -97,6 +127,21 @@ describe('userTechController Test Suit', () => {
         .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(200);
+    });
+
+    it('should not create a new tech for "user not allowed" - destroy', async () => {
+
+        const user = await factories.create('User');
+        const token = user.generateToken();
+
+        const response = await supertest(app).delete(`/techs/3`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
+            name: 'test'
+        });
+
+        expect(response.status).toBe(400);
+        expect(response.body.error).toBe('user not allowed');
     });
 
     it('should return code 400 for "tech not found" - delete', async () => {

@@ -3,6 +3,7 @@ const supertest = require('supertest');
 const truncate = require('../../utils/truncate');
 const factories = require('../../utils/factories');
 const app = require('../../../src/app');
+const UserModel = require('../../../src/models/UserModel');
 
 describe('userController Test Suit', () => {
 
@@ -44,12 +45,12 @@ describe('userController Test Suit', () => {
         expect(response.body).toHaveProperty("error");
     });
 
-    it('should return code 400 for "id referance must be a number" - show', async () => {
+    it('should return code 400 for "id must be a number" - show', async () => {
         
         const response = await supertest(app).get(`/users/j`);
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.validation.keys[0]).toBe("id");
     });
 
     it('should add a user on db', async () => {
@@ -66,11 +67,9 @@ describe('userController Test Suit', () => {
 
     it('should not add a user with same email on db', async () => {
 
-        await supertest(app).post('/users').send({
-            name: 'teste',
-            email: 'teste@teste.com',
-            password: 'bla123'
-        });
+        await factories.create('User', {
+            email: 'teste@teste.com'
+        })
 
         const response = await supertest(app).post('/users').send({
             name: 'teste',
@@ -79,42 +78,32 @@ describe('userController Test Suit', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('error');
-    });
-
-    it('should return code 400 for "one or more fields are missing" - store', async () => {
-
-        const response = await supertest(app).post('/users').send({
-            name: 'teste',
-            email: 'teste@teste.com',
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('error');
+        expect(response.body.error).toBe('email already in use');
     });
 
     it('should update a user on db', async () => {
 
-        await factories.create('User');
+        const user = await factories.create('User');
+        const token = user.generateToken();
 
-        const response = await supertest(app).put('/users/1').send({
+        const response = await supertest(app).put('/users')
+        .set('authorization', 'Bearer ' + token)
+        .send({
             name: 'test'
         });
         
         expect(response.status).toBe(200);
     });
 
-    it('should return code 400 for "id referance must be a number" - update', async () => {
-        
-        const response = await supertest(app).put(`/users/k`);
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
     it('should return code 400 for "user not found" - update', async () => {
 
-        const response = await supertest(app).put('/users/10').send({
+        const user = await factories.create('User');
+        const token = user.generateToken();
+        await user.destroy({ where: { id: user.id }});
+
+        const response = await supertest(app).put('/users')
+        .set('authorization', 'Bearer ' + token)
+        .send({
             name: 'test'
         });
         
@@ -124,24 +113,23 @@ describe('userController Test Suit', () => {
 
     it('should erase a user from db', async () => {
 
-        await factories.create('User');
+        const user = await factories.create('User');
+        const token = user.generateToken();
 
-        const response = await supertest(app).delete('/users/1');
+        const response = await supertest(app).delete('/users')
+        .set('authorization', 'Bearer ' + token);
         
         expect(response.status).toBe(200);
     });
 
-    it('should return code 400 for "id referance must be a number" - delete', async () => {
-        
-        const response = await supertest(app).delete(`/users/m`);
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
-    });
-
     it('should return code 400 for "user not found" - delete', async () => {
 
-        const response = await supertest(app).delete('/users/1');
+        const user = await factories.create('User');
+        const token = user.generateToken();
+        await user.destroy({ where: { id: user.id }});
+
+        const response = await supertest(app).delete('/users')
+        .set('authorization', 'Bearer ' + token);
         
         expect(response.status).toBe(400);
     });

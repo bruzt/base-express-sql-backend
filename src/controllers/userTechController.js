@@ -13,7 +13,7 @@ module.exports = {
                 include: { association: 'techs', through: { attributes: [] } }
             });
 
-            if(! user) return res.status(400).json({ error: 'User not found' });
+            if(! user) return res.status(400).json({ error: 'user not found' });
         
             return res.json(user.techs);
 

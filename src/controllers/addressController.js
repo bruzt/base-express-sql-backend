@@ -13,7 +13,7 @@ module.exports = {
                 include: { association: 'addresses' }
             });
 
-            if(! user) return res.status(400).json({ error: 'User not found' });
+            if(! user) return res.status(400).json({ error: 'user not found' });
         
             return res.json(user.addresses);
 
@@ -33,7 +33,7 @@ module.exports = {
 
             const user = await UserModel.findByPk(user_id);
 
-            if(! user) return res.status(400).json({ error: 'User not found' });       
+            if(! user) return res.status(400).json({ error: 'user not found' });       
             
             const address = await AddressModel.create({ user_id, zipcode, street, number });
     

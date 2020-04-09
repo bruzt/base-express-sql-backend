@@ -36,7 +36,9 @@ module.exports = {
 
     async store(req, res){
 
-        if(req.tokenPayload.accessLevel < 2) return res.status(400).json({ error: 'not allowed' });
+        const { accessLevel } = req.tokenPayload;
+        
+        if(!accessLevel || accessLevel < 2) return res.status(400).json({ error: 'user not allowed' });
 
         const { name } = req.body;
 
@@ -54,10 +56,11 @@ module.exports = {
 
     async update(req,res){
 
-        if(req.tokenPayload.accessLevel < 2) return res.status(400).json({ error: 'not allowed' });
+        const { accessLevel } = req.tokenPayload;
+
+        if(!accessLevel || accessLevel < 2) return res.status(400).json({ error: 'user not allowed' });
 
         const { id } = req.params;
-
         const { name } = req.body;
 
         try {
@@ -76,7 +79,9 @@ module.exports = {
 
     async destroy(req, res){
 
-        if(req.tokenPayload.accessLevel < 2) return res.status(400).json({ error: 'not allowed' });
+        const { accessLevel } = req.tokenPayload;
+
+        if(!accessLevel || accessLevel < 2) return res.status(400).json({ error: 'user not allowed' });
 
         const { id } = req.params;
 

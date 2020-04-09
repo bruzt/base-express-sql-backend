@@ -14,6 +14,7 @@ describe('userTechController Test Suit', () => {
     it('should show all techs from an user', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
 
         const tech1 = await factories.create('Tech');
         const tech2 = await factories.create('Tech');
@@ -21,109 +22,119 @@ describe('userTechController Test Suit', () => {
         await user.addTech(tech1);
         await user.addTech(tech2);
         
-        const response = await supertest(app).get(`/users/${user.id}/techs`);
+        const response = await supertest(app).get(`/users-techs`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(2);
     });
 
-    it('should return code 400 for  "user_id must be a number" - index', async () => {
+    it('should return code 400 for  "authorization is required" - index', async () => {
         
-        const response = await supertest(app).get(`/users/f/techs`);
+        const response = await supertest(app).get(`/users-techs`);
 
         expect(response.status).toBe(400);
-        expect(response.body.validation.source).toBe("params");
-        expect(response.body.validation.keys[0]).toBe("user_id");
+        expect(response.body.validation.keys[0]).toBe("authorization");
     });
 
     it('should return code 400 for "user not found" - index', async () => {
+
+        const user = await factories.create('User');
+        const token = user.generateToken();
+        await user.destroy({ where: { id: user.id }});
         
-        const response = await supertest(app).get(`/users/1/techs`);
+        const response = await supertest(app).get(`/users-techs`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("user not found");
     });
 
     it('should link a tech to an user', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
         const tech = await factories.create('Tech');
         
-        const response = await supertest(app).post(`/users/${user.id}/techs/${tech.id}`);
+        const response = await supertest(app).post(`/users-techs/${tech.id}`)
+        .set('authorization', 'Bearer ' + token);
     
         expect(response.status).toBe(200);
     });
 
-    it('should return code 400 for "user_id referance must be a number" - store', async () => {
+    it('should return code 400 for "id must be a number" - store', async () => {
         
-        const response = await supertest(app).post(`/users/g/techs/1`);
+        const user = await factories.create('User');
+        const token = user.generateToken();
+
+        const response = await supertest(app).post(`/users-techs/j`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
         expect(response.body.validation.source).toBe("params");
-        expect(response.body.validation.keys[0]).toBe("user_id");
-    });
-
-    it('should return code 400 for "tech_id referance must be a number" - store', async () => {
-        
-        const response = await supertest(app).post(`/users/1/techs/j`);
-
-        expect(response.status).toBe(400);
-        expect(response.body.validation.source).toBe("params");
-        expect(response.body.validation.keys[0]).toBe("tech_id");
-    });
-
-    it('should return code 400 for "user not found" - store', async () => {
-        
-        const response = await supertest(app).post(`/users/3/techs/2`);
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.validation.keys[0]).toBe("id");
     });
 
     it('should return code 400 for "user not found" - store', async () => {
 
         const user = await factories.create('User');
+        const token = user.generateToken();
+        await user.destroy({ where: { id: user.id }});
         
-        const response = await supertest(app).post(`/users/${user.id}/techs/2`);
+        const response = await supertest(app).post(`/users-techs/2`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("user not found");
+    });
+
+    it('should return code 400 for "tech not found" - store', async () => {
+
+        const user = await factories.create('User');
+        const token = user.generateToken();
+        
+        const response = await supertest(app).post(`/users-techs/2`)
+        .set('authorization', 'Bearer ' + token);
+
+        expect(response.status).toBe(400);
+        expect(response.body.error).toBe("tech not found");
     });
 
     it('should unlink a tech of an user', async () => {
 
         const user = await factories.create('User');
-        
+        const token = user.generateToken();
         const tech = await factories.create('Tech');
 
         await user.addTech(tech);
 
-        const response = await supertest(app).delete(`/users/${user.id}/techs/${tech.id}`);
+        const response = await supertest(app).delete(`/users-techs/${tech.id}`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(200);
     });
 
-    it('should return code 400 for "user_id referance must be a number" - delete', async () => {
+    it('should return code 400 for "id must be a number" - delete', async () => {
         
-        const response = await supertest(app).delete(`/users/i/techs/2`);
+        const user = await factories.create('User');
+        const token = user.generateToken();
+
+        const response = await supertest(app).delete(`/users-techs/j`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
         expect(response.body.validation.source).toBe("params");
-        expect(response.body.validation.keys[0]).toBe("user_id");
-    });
-
-    it('should return code 400 for "tech_id referance must be a number" - delete', async () => {
-        
-        const response = await supertest(app).delete(`/users/1/techs/p`);
-
-        expect(response.status).toBe(400);
-        expect(response.body.validation.source).toBe("params");
-        expect(response.body.validation.keys[0]).toBe("tech_id");
+        expect(response.body.validation.keys[0]).toBe("id");
     });
 
     it('should return code 400 for "user not found" - delete', async () => {
-        
-        const response = await supertest(app).delete(`/users/1/techs/2`);
+
+        const user = await factories.create('User');
+        const token = user.generateToken();
+        await user.destroy({ where: { id: user.id }});
+
+        const response = await supertest(app).delete(`/users-techs/2`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
     });
@@ -131,10 +142,12 @@ describe('userTechController Test Suit', () => {
     it('should return code 400 for "tech not found" - delete', async () => {
 
         const user = await factories.create('User');
-        
-        const response = await supertest(app).delete(`/users/${user.id}/techs/2`);
+        const token = user.generateToken();
+
+        const response = await supertest(app).delete(`/users-techs/2`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("tech not found");
     });
 });
