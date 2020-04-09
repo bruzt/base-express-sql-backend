@@ -22,6 +22,12 @@ module.exports = {
                 unique: true
             },
 
+            access_level: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 1
+            },
+
             password: {
                 type: Sequelize.STRING,
                 allowNull: false

@@ -9,12 +9,22 @@ module.exports = {
     }),
 
     store: celebrate({
+        [Segments.HEADERS]: Joi.object().keys({
+            authorization: Joi.string().required()
+        })
+        .unknown(),
+
         [Segments.BODY]: Joi.object().keys({
             name: Joi.string().required()
         })
     }),
 
     update: celebrate({
+        [Segments.HEADERS]: Joi.object().keys({
+            authorization: Joi.string().required()
+        })
+        .unknown(),
+
         [Segments.PARAMS]: Joi.object().keys({
             id: Joi.number().required(),
         }),
@@ -25,6 +35,11 @@ module.exports = {
     }),
 
     destroy: celebrate({
+        [Segments.HEADERS]: Joi.object().keys({
+            authorization: Joi.string().required()
+        })
+        .unknown(),
+        
         [Segments.PARAMS]: Joi.object().keys({
             id: Joi.number().required(),
         })

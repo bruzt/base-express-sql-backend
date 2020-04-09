@@ -12,6 +12,7 @@ class UserModel extends Model {
             name: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING,
+            access_level: DataTypes.INTEGER,
             reset_password_token: DataTypes.STRING,
             reset_password_expires: DataTypes.DATE,
 
@@ -51,9 +52,10 @@ class UserModel extends Model {
 
     generateToken() {
 
-        return jwt.sign({ id: this.id }, process.env.APP_SECRET, {
-            expiresIn: "12h"
-        });
+        return jwt.sign({ 
+            id: this.id, 
+            accessLevel: this.access_level 
+        }, process.env.APP_SECRET, { expiresIn: "12h" });
     }
 }
 
