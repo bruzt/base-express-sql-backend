@@ -18,13 +18,14 @@ describe('userTechController Test Suit', () => {
         expect(response.status).toBe(200);
     });
 
-    it('should show a tech', async () => {
+    it('should show a specific tech', async () => {
 
         const tech = await factories.create('Tech');
 
         const response = await supertest(app).get(`/techs/${tech.id}`);
 
         expect(response.status).toBe(200);
+        expect(response.body.id).toBe(tech.id);
     });
 
     it('should return code 400 for "tech not found"', async () => {
@@ -32,12 +33,18 @@ describe('userTechController Test Suit', () => {
         const response = await supertest(app).get(`/techs/1`);
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('error');
+        expect(response.body.error  ).toBe('tech not found');
     });
 
     it('should create a new tech', async () => {
 
-        const response = await supertest(app).post(`/techs`).send({
+        const user = await factories.create('User');
+        user.access_level = 2;
+        const token = user.generateToken();
+
+        const response = await supertest(app).post(`/techs`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
             name: 'test'
         });
 
@@ -47,9 +54,15 @@ describe('userTechController Test Suit', () => {
 
     it('should update a tech', async () => {
 
+        const user = await factories.create('User');
+        user.access_level = 2;
+        const token = user.generateToken();
+
         const tech = await factories.create('Tech');
 
-        const response = await supertest(app).put(`/techs/${tech.id}`).send({
+        const response = await supertest(app).put(`/techs/${tech.id}`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
             name: 'test'
         });
 
@@ -58,28 +71,44 @@ describe('userTechController Test Suit', () => {
 
     it('should return code 400 for "tech not found" - update', async () => {
 
-        const response = await supertest(app).put(`/techs/6`).send({
+        const user = await factories.create('User');
+        user.access_level = 2;
+        const token = user.generateToken();
+
+        const response = await supertest(app).put(`/techs/6`)
+        .set('authorization', 'Bearer ' + token)
+        .send({
             name: 'test'
         });
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("tech not found");
     });
 
     it('should delete a tech', async () => {
 
+        const user = await factories.create('User');
+        user.access_level = 2;
+        const token = user.generateToken();
+
         const tech = await factories.create('Tech');
 
-        const response = await supertest(app).delete(`/techs/${tech.id}`);
+        const response = await supertest(app).delete(`/techs/${tech.id}`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(200);
     });
 
     it('should return code 400 for "tech not found" - delete', async () => {
 
-        const response = await supertest(app).delete(`/techs/6`);
+        const user = await factories.create('User');
+        user.access_level = 2;
+        const token = user.generateToken();
+
+        const response = await supertest(app).delete(`/techs/6`)
+        .set('authorization', 'Bearer ' + token);
 
         expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("tech not found");
     });
 });

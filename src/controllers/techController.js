@@ -64,7 +64,7 @@ module.exports = {
 
             const [ updated ] = await TechModel.update({ name }, { where: { id } });
 
-            if(updated == 0) return res.status(400).json({ error: 'tech not found '});
+            if(updated == 0) return res.status(400).json({ error: 'tech not found'});
     
             return res.sendStatus(200);
             
