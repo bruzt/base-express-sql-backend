@@ -23,20 +23,21 @@ module.exports = {
                 },
                 include: [ 
                     {   
-                        association: 'addresses', // INNER JOIN
+                        association: 'addresses',
                         attributes: ['id', 'zipcode', 'street', 'number'],            
                         where: {
                             street: { [iLike]: `%${street}%` } 
-                        }
+                        },
+                        required: false, // true = INNER JOIN, false = LEFT JOIN, default = true
                     },
                     {   
                         association: 'techs',
-                        required: false, // LEFT JOIN
                         attributes: ['id', 'name'], 
                         through: { attributes: [] },    
                         where: {
                             name: { [iLike]: `%${tech}%` }
-                        }
+                        },
+                        required: false, // LEFT JOIN
                     }
                 ]
             });
