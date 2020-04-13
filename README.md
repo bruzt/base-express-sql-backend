@@ -1,4 +1,4 @@
-Código refêrencia para a construção de uma API REST no padrão MVC usando:
+Código referência para a construção de uma API REST no padrão MVC usando:
  - [Framework Express](https://www.npmjs.com/package/express) para gerenciamento de rotas;
  - [ORM Sequelize](https://www.npmjs.com/package/sequelize) para acesso ao banco de dados PostgreSQL e construção de Migrations com exemplos de relacionamento 1-N e N-N;
  - Criptografia da senha armazenada no banco de dados com [bcrypt](https://www.npmjs.com/package/bcryptjs);
