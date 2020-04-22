@@ -1,6 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 
+/**
+ * @param {string} sourcePath This folder location (__dirname)
+ * @param {string} dirPath Path to the folder you want to require all .js files
+ * @returns {Object<string, NodeModule} An object with all required files in dirPath
+ */
 function autoRequireAll(sourcePath, dirPath) {
 
     const requires = {};

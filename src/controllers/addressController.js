@@ -3,9 +3,13 @@ const AddressModel = require('../models/AddressModel');
 
 module.exports = {
 
+    /**
+     * @param {Request} req 
+     * @param {Response} res 
+     */
     async index(req, res){
-
-        const id = req.tokenPayload.id;
+        
+        const { id } = req.tokenPayload;
 
         try {
 
@@ -23,8 +27,12 @@ module.exports = {
         }
     },
     
+    /**
+     * @param {Request} req 
+     * @param {Response} res 
+     */
     async store(req, res){
-
+        
         const user_id = req.tokenPayload.id;
 
         const { zipcode, street, number } = req.body;
@@ -45,6 +53,10 @@ module.exports = {
         }
     },
 
+    /**
+     * @param {Request} req 
+     * @param {Response} res 
+     */
     async update(req, res){
 
         const id = req.params.id;
@@ -75,6 +87,10 @@ module.exports = {
         }
     },
 
+    /**
+     * @param {Request} req 
+     * @param {Response} res 
+     */
     async destroy(req, res){
 
         const id = req.params.id;
