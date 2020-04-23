@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
+const express = require('express');
 
 /**
- * @param {Request} req
- * @param {Response} res
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {Function} next
  */
-module.exports = (req, res, next) => {
-
+module.exports = function verifyJwt(req, res, next) {
+    
     const { authorization } = req.headers;
 
     const splitBearer = authorization.split(' ');

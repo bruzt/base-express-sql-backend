@@ -1,16 +1,21 @@
+const express = require('express');
+
 const UserModel = require('../models/UserModel');
 const AddressModel = require('../models/AddressModel');
 
+/**
+ * @callback ReqRes
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
 module.exports = {
 
-    /**
-     * @param {Request} req 
-     * @param {Response} res 
-     */
+    /** @type {ReqRes} */
     async index(req, res){
         
         const { id } = req.tokenPayload;
-
+        
         try {
 
             const user = await UserModel.findByPk(id, {
@@ -27,10 +32,7 @@ module.exports = {
         }
     },
     
-    /**
-     * @param {Request} req 
-     * @param {Response} res 
-     */
+    /** @type {ReqRes} */
     async store(req, res){
         
         const user_id = req.tokenPayload.id;
@@ -53,10 +55,7 @@ module.exports = {
         }
     },
 
-    /**
-     * @param {Request} req 
-     * @param {Response} res 
-     */
+    /** @type {ReqRes} */
     async update(req, res){
 
         const id = req.params.id;
@@ -87,10 +86,7 @@ module.exports = {
         }
     },
 
-    /**
-     * @param {Request} req 
-     * @param {Response} res 
-     */
+    /** @type {ReqRes} */
     async destroy(req, res){
 
         const id = req.params.id;

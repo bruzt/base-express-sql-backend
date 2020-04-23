@@ -1,8 +1,16 @@
+const express = require('express');
 
 const UserModel = require('../models/UserModel');
 
+/**
+ * @callback ReqRes
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
 module.exports = {
 
+    /** @type {ReqRes} */
     async store(req, res){
 
         const { email, password } = req.body;

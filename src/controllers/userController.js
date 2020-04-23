@@ -1,7 +1,16 @@
+const express = require('express');
+
 const UserModel = require('../models/UserModel');
+
+/**
+ * @callback ReqRes
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
 
 module.exports = {
 
+    /** @type {ReqRes} */
     async index(req, res){
 
         try {
@@ -16,6 +25,7 @@ module.exports = {
         }
     },
 
+    /** @type {ReqRes} */
     async show(req, res){
 
         const { id } = req.params;
@@ -34,6 +44,7 @@ module.exports = {
         }
     },
     
+    /** @type {ReqRes} */
     async store(req, res){
 
         const { name, email, password } = req.body;
@@ -56,6 +67,7 @@ module.exports = {
         }
     },
 
+    /** @type {ReqRes} */
     async update(req, res){
 
         const { id } = req.tokenPayload;
@@ -79,6 +91,7 @@ module.exports = {
         }
     },
 
+    /** @type {ReqRes} */
     async destroy(req, res){
 
         const { id } = req.tokenPayload;

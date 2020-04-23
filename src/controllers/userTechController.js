@@ -1,8 +1,17 @@
+const express = require('express');
+
 const UserModel = require('../models/UserModel');
 const TechModel = require('../models/TechModel');
 
+/**
+ * @callback ReqRes
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+
 module.exports = {
 
+    /** @type {ReqRes} */
     async index(req, res){
 
         const user_id = req.tokenPayload.id;
@@ -23,6 +32,7 @@ module.exports = {
         }
     },
 
+    /** @type {ReqRes} */
     async store(req, res){
 
         const id = req.params.id;
@@ -48,6 +58,7 @@ module.exports = {
         }
     },
 
+    /** @type {ReqRes} */
     async destroy(req, res){
 
         const id = req.params.id;
