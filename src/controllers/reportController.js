@@ -3,15 +3,9 @@ const { Op } = require('sequelize');
 
 const UserModel = require('../models/UserModel');
 
-/**
- * @callback ReqRes
- * @param {express.Request} req
- * @param {express.Response} res
- */
-
 module.exports = {
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     async show(req, res){
 
         const iLike = (process.env.NODE_ENV === 'test') ? Op.like : Op.iLike;

@@ -2,15 +2,9 @@ const express = require('express');
 
 const TechModel = require('../models/TechModel');
 
-/**
- * @callback ReqRes
- * @param {express.Request} req
- * @param {express.Response} res
- */
-
 module.exports = {
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     async index(req, res){
 
         try {
@@ -25,7 +19,7 @@ module.exports = {
         }
     },
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     async show(req, res){
 
         const id = req.params.id;
@@ -44,7 +38,7 @@ module.exports = {
         }
     },
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     async store(req, res){
 
         const { accessLevel } = req.tokenPayload;
@@ -65,7 +59,7 @@ module.exports = {
         }
     },
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     async update(req,res){
 
         const { accessLevel } = req.tokenPayload;
@@ -89,7 +83,7 @@ module.exports = {
         }
     },
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     async destroy(req, res){
 
         const { accessLevel } = req.tokenPayload;

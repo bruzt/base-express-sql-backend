@@ -4,15 +4,9 @@ const crypto = require('crypto');
 const UserModel = require('../models/UserModel');
 const mailer = require('../services/mailer');
 
-/**
- * @callback ReqRes
- * @param {express.Request} req
- * @param {express.Response} res
- */
-
 module.exports = {
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     store: async (req, res) => {
 
         const { email } = req.body;
@@ -49,7 +43,7 @@ module.exports = {
         }
     },
 
-    /** @type {ReqRes} */
+    /** @param {express.Request} req * @param {express.Response} res */
     update: async (req, res) => {
 
         const { token, password } = req.body;
